@@ -78,7 +78,7 @@ Once you have entered your workspace and access keys, you are ready to run the m
 
 # Running the Model
 
-To run the model, right click on **CustomExperiment** then click the **Run** button. You will see text in the console about registering with the Bonsai platform. Once registration is complete (it will only take a few seconds), go back to the Bonsai dashboard where you created your brain.
+To run the model, right click on **CustomExperiment** then click the **Run** button. You will see text in the console about registering with the Bonsai platform. Once registration is complete (it will only take a few seconds), go back to the Bonsai UI where you created your brain.
 
 Click the **Train** button. The simulator with the name matching your simulator will appear (in the example above, this is called *AnyLogic - ABCA*). Click the name of your simulator. 
 
@@ -86,7 +86,7 @@ If this is the first start of your brain it may take a few minutes for the brain
 
 You may decide to let your training run for a bit, particularly across multiple episode start events, to get an understanding of how the model behaves under various configuration parameters provided by the brain. You will also want to make sure your number of iterations stay below 1000, or the brain will struggle to learn. If needed, you can implement custom logic in the **halted()** method in ModelExecuter to help drive behavior. Halted indicates to the brain that the simulator has reached a state that it cannot progress from.
 
-After you have tested locally, stop your model. Then click **Stop Training** in the Bonsai dashboard for the brain. 
+After you have tested locally, stop your model. Then click **Stop Training** in the Bonsai UI for the brain. 
 
 # Export Your Model
 
@@ -118,19 +118,19 @@ Activity Based Costing Analysis Export
 
 Then you only need to zip the parent **Activity Based Costing Analysis Export** folder. 
 
-Back in the Bonsai dashboard, next to **Simulators**, click the **Add sim** button.
+Back in the Bonsai UI, next to **Simulators**, click the **Add sim** button.
 
 This will open a dialog. 
 
-![Add Sim Prompt](images/add_sim.png =500x)
+<img src="Images/add_sim.png" alt="Add Sim Prompt" width="500" border="1"/>
 
 Select AnyLogic. 
 
-![Add Sim Prompt](images/add_sim_al_nozip.png =500x)
+<img src="Images/add_sim_al_nozip.png" alt="Add Sim Prompt 2" width="500" border="1"/>
 
 Select or drag the zip file containing the exported model. 
 
-![Add Sim Prompt](images/add_sim_al_zip.png =500x)
+<img src="Images/add_sim_al_zip.png" alt="Add Sim Prompt 3" width="500" border="1"/>
 
 Give your simulator a name, then click **Create simulator**. 
 
@@ -150,6 +150,9 @@ Now click **Train**. Since you indicated the package name you do not need to sel
 
 In a few minutes time you will see several simulators connect to and train your brain.  
 
+# Sample Results
+tbd
+
 # Using Bonsai Assessment with Your Model
-Starting an Assessment session is similar to starting a training session. Start your CustomExperiment class and wait for it to register. In the Bonsai dashboard, using your already-trained brain, click the **Assessment** button. Then select the name of your simulator
+Starting an Assessment session is similar to starting a training session. Start your CustomExperiment class and wait for it to register. In the Bonsai UI, using your already-trained brain, click the **Assessment** button. Then select the name of your simulator
 
