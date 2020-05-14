@@ -2,7 +2,40 @@
 The AnyLogic SDK for Bonsai is an add-in to AnyLogic that allows users to connect their AnyLogic models to the Microsoft Bonsai platform.<url>  
 
 # Including the SDK in Your Model
-The AnyLogic SDK for Bonsai is an external JAR library that can be included. To add to an existing model, add the com.anylogic.sdk3.connector-0.0.4.jar file to your model project, as well as the json-20190722.jar depedency.  If you need help for how to add external classes to your model, please visit the <a href="https://help.anylogic.com/index.jsp?topic=%2Fcom.anylogic.help%2Fhtml%2Flibraries%2FAdding+External+Jar+Files+and+Java+Classes.html">Adding External Java Classes</a> section on the AnyLogic help page.
+The AnyLogic SDK for Bonsai is an external JAR library that can be included. To add to an existing model, add the **com.anylogic.sdk3.connector-0.0.4.jar** file to your model project, as well as its dependencies:
+
+
+- activation-1.1.1.jar
+- aopalliance-repackaged-2.5.0-b32.jar
+- com.anylogic.sdk3.connector-0.0.4.jar
+- hk2-api-2.5.0-b32.jar
+- hk2-locator-2.5.0-b32.jar
+- hk2-utils-2.5.0-b32.jar
+- jackson-annotations-2.8.4.jar
+- jackson-core-2.10.1.jar
+- jackson-databind-2.8.4.jar
+- jackson-jaxrs-base-2.8.4.jar
+- jackson-jaxrs-json-provider-2.8.4.jar
+- jackson-jr-objects-2.10.1.jar
+- jackson-module-jaxb-annotations-2.8.4.jar
+- javassist-3.20.0-GA.jar
+- javax.annotation-api-1.2.jar
+- javax.inject-2.5.0-b32.jar
+- javax.ws.rs-api-2.0.1.jar
+- jaxb-api-2.3.0.jar
+- jaxb-core-2.3.0.jar
+- jaxb-impl-2.3.0.jar
+- jersey-client-2.25.1.jar
+- jersey-common-2.25.1.jar
+- jersey-entity-filtering-2.25.1.jar
+- jersey-guava-2.25.1.jar
+- jersey-media-json-jackson-2.25.1.jar
+- json-20190722.jar
+- osgi-resource-locator-1.0.1.jar
+
+Each of these files are located in the <a href="./connector">connector</a> directory.
+
+If you need help for how to add external classes to your model, please visit the <a href="https://help.anylogic.com/index.jsp?topic=%2Fcom.anylogic.help%2Fhtml%2Flibraries%2FAdding+External+Jar+Files+and+Java+Classes.html">Adding External Java Classes</a> section on the AnyLogic help page.
 
 
 # Connecting Your Model to Bonsai
