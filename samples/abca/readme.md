@@ -33,7 +33,7 @@ To start a new brain for this model:
 
 1. Create an account or sign into Bonsai. 
 2. Click **Create brain** button in the top left, then select **Empty brain** in the dialog. 
-3. Name your new brain (e.g., “Costing Analyais”). 
+3. Name your new brain (e.g., “costing-analysis”). 
 4. Click **Create Brain**. This will create a new brain for you.
 
 Copy the contents of <a href="abca.ink">abca.ink</a> in to the *Teach* tab for your new brain. 
@@ -48,7 +48,7 @@ The Activity Based Costing Analysis model is made up of many components. The tab
 |----------|:-------------|
 | Main agent |  The primary agent that sets up the costing scenario. |
 | Simulation: Main |    The visual simulation. This does not run training with Bonsai.   |
-| CustomExperiment | The custom experiment is used to connect the AnyLogic model with the Bonsai platform using the <a href="../bonsai3-anylogic">AnyLogic SDK for Bonsai</a>. |
+| CustomExperiment | The custom experiment is used to connect the AnyLogic model with the Bonsai platform using the <a href="../..">AnyLogic SDK for Bonsai</a>. |
 | ModelExecuter | Implements the ISimulator interface and handles the episode events from Bonsai. |
 | ModelConfig | Implements the base Config class to set variables in the model for use of machine teaching in Bonsai. |
 | ModelObservation | The state related information for the model to pass to the Bonsai platform.  |
@@ -120,7 +120,19 @@ Then you only need to zip the parent **Activity Based Costing Analysis Export** 
 
 Back in the Bonsai dashboard, next to **Simulators**, click the **Add sim** button.
 
-This will open a dialog. Select AnyLogic. Select or drag the zip file containing the exported model. Give your simulator a name, then click **Create simulator**. 
+This will open a dialog. 
+
+![Add Sim Prompt](images/add_sim.png =500x)
+
+Select AnyLogic. 
+
+![Add Sim Prompt](images/add_sim_al_nozip.png =500x)
+
+Select or drag the zip file containing the exported model. 
+
+![Add Sim Prompt](images/add_sim_al_zip.png =500x)
+
+Give your simulator a name, then click **Create simulator**. 
 
 After the simulator is created you will see the new simulator appear under the **Simulators** section.
 
@@ -139,4 +151,5 @@ Now click **Train**. Since you indicated the package name you do not need to sel
 In a few minutes time you will see several simulators connect to and train your brain.  
 
 # Using Bonsai Assessment with Your Model
-tbd
+Starting an Assessment session is similar to starting a training session. Start your CustomExperiment class and wait for it to register. In the Bonsai dashboard, using your already-trained brain, click the **Assessment** button. Then select the name of your simulator
+
