@@ -122,15 +122,15 @@ Back in the Bonsai UI, next to **Simulators**, click the **Add sim** button.
 
 This will open a dialog. 
 
-<img src="Images/add_sim.png" alt="Add Sim Prompt" width="500" border="1"/>
+<img src="../../images/add_sim.png" alt="Add Sim Prompt" width="500" border="1"/>
 
 Select AnyLogic. 
 
-<img src="Images/add_sim_al_nozip.png" alt="Add Sim Prompt 2" width="500" border="1"/>
+<img src="../../images/add_sim_al_nozip.png" alt="Add Sim Prompt 2" width="500" border="1"/>
 
 Select or drag the zip file containing the exported model. 
 
-<img src="Images/add_sim_al_zip.png" alt="Add Sim Prompt 3" width="500" border="1"/>
+<img src="../../images/add_sim_al_zip.png" alt="Add Sim Prompt 3" width="500" border="1"/>
 
 Give your simulator a name, then click **Create simulator**. 
 
