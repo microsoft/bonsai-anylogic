@@ -7,3 +7,8 @@ There are a number of samples packaged with the connector:
 
 - <a href="samples/abca">Activity Based Costing</a> - a simplified factory floor model for cost associated with product processing is calculated and analyzed.
 - <a href="samples/product-delivery">Product Delivery</a> -  simulates product delivery between three manufacturing facilities and fifteen distributors in the USA.
+
+
+## Microsoft Open Source Code of Conduct
+
+This repository is subject to the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct).
