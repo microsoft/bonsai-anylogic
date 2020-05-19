@@ -34,45 +34,9 @@ Copy the contents of <a href="product_delivery.ink">product_delivery.ink</a> in 
 
 Do not click Train yet. 
 
-# Understanding the Model
-
-The Product Delivery model is made up of many components. The table below outlines how these components work together:
-
-| Component   |      Description      |
-|----------|:-------------|
-| Main agent |  The primary agent that sets up the scenario. |
-| Simulation: Main |    The visual simulation. This does not run training with Bonsai.   |
-| CustomExperiment | The custom experiment is used to connect the AnyLogic model with the Bonsai platform using the <a href="../../connector">AnyLogic Library for Bonsai</a>. |
-| ModelExecuter | Implements the ISimulator interface and handles the episode events from Bonsai. |
-| ModelConfig | Implements the base Config class to set variables in the model for use of machine teaching in Bonsai. |
-| ModelObservation | The state related information for the model to pass to the Bonsai platform.  |
-| ModelAction | The action from the Bonsai platform. For example, set variable *x* to value *v*. |
-
-Open the CustomExperiment and enter your workspace and access keys for connecting to the Bonsai platform. These can be obtained from [link].
-
-Example CustomExperiment:
-```java
-sim = new ModelExecutor();
-sim.exp = this;
-
-// bonsai workspace
-String workspace = "<your workspace here>";
-
-// access key, generated from https://beta.bons.ai/brains/accounts/settings
-String accessKey = "<your access key here>";
-String simulatorName = "AnyLogic - ABCA";
-
-SessionConfig sc = new SessionConfig(accessKey, workspace, simulatorName);                     
-SimulatorSession session = new SimulatorSession(sc, sim, ModelAction.class, ModelConfig.class);
-
-session.startSession();
-```
-
-Once you have entered your workspace and access keys, you are ready to run the model.
-
 # Running the Model
 
-To run the model, right click on **CustomExperiment** then click the **Run** button. You will see text in the console about registering with the Bonsai platform. Once registration is complete (it will only take a few seconds), go back to the Bonsai dashboard where you created your brain.
+To run the model, right click on **AnimatedExperiment** then click the **Run** button. You will see text in the console about registering with the Bonsai platform. Once registration is complete (it will only take a few seconds), go back to the Bonsai dashboard where you created your brain.
 
 Click the **Train** button. The simulator with the name matching your simulator will appear (in the example above, this is called *AnyLogic - ABCA*). Click the name of your simulator. 
 
@@ -88,7 +52,7 @@ After you have confirmed your model can connect to the platform locally, it's ti
 
 AnyLogic Professional users can export their model by going to **File** > **Export...** > **to standalone Java application** in the menu bar. 
 
-Select CustomExperiment in the dialog and the directory where the exported files will reside.
+Select **HeadlessExperiment** in the dialog and the directory where the exported files will reside.
 
 If you need additional assistance with exporting a model, please see the <a href="https://help.anylogic.com/index.jsp?topic=%2Fcom.anylogic.help%2Fhtml%2Fstandalone%2FExport_Java_Application.html">Exporting a model as a standalone Java application</a> topic in the AnyLogic Help topics.
 
@@ -101,7 +65,7 @@ Once you have exported your model, you can zip the entire contents of the folder
 For example, if your folder structure is:
 
 ```
-Product Delivery Export
+Product Delivery Exported
 └─── lib
 |    |── AnyLogic Model End User Agreement.pdf
 |    └── ... jar files ...      
@@ -110,21 +74,21 @@ Product Delivery Export
 └─── readme.txt
 ```
 
-Then you only need to zip the parent **Product Delivery** folder. 
+Then you only need to zip the parent **Product Delivery Exported** folder. 
 
 Back in the Bonsai dashboard, next to **Simulators**, click the **Add sim** button.
 
 This will open a dialog. 
 
-<img src="../../images/add_sim.png" alt="Add Sim Prompt" width="500" border="1"/>
+<img src="images/add_sim.png" alt="Add Sim Prompt" width="500" border="1"/>
 
 Select AnyLogic. 
 
-<img src="../../images/add_sim_al_nozip.png" alt="Add Sim Prompt 2" width="500" border="1"/>
+<img src="images/add_sim_al_nozip.png" alt="Add Sim Prompt 2" width="500" border="1"/>
 
 Select or drag the zip file containing the exported model. 
 
-<img src="../../images/add_sim_al_zip.png" alt="Add Sim Prompt 3" width="500" border="1"/>
+<img src="images/add_sim_al_zip.png" alt="Add Sim Prompt 3" width="500" border="1"/>
 
 Give your simulator a name, then click **Create simulator**. 
 
@@ -145,4 +109,4 @@ Now click **Train**. Since you indicated the package name you do not need to sel
 In a few minutes time you will see several simulators connect to and train your brain.  
 
 # Using Bonsai Assessment with Your Model
-Starting an Assessment session is similar to starting a training session. Start your CustomExperiment class and wait for it to register. In the Bonsai UI, using your already-trained brain, click the **Assessment** button. Then select the name of your simulator.
+Starting an Assessment session is similar to starting a training session. Start your AnimatedExperiment class and wait for it to register. In the Bonsai UI, using your already-trained brain, click the **Assessment** button. Then select the name of your simulator.

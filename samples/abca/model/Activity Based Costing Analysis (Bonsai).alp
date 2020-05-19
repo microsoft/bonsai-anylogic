@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1208168597833</Id>
 	<Name><![CDATA[Activity Based Costing Analysis (Bonsai)]]></Name>
@@ -9056,51 +9056,29 @@ return obs;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[workspace]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["ac0f2321534a4360"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[brainName]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["abca-wrapper"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[brainVersion]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[9]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[accessKey]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["NWJiNWYwNjJhZTYzNDIwYzg5YjBjYzQyNDM5ZDQxMzA6OGJiZmRhZmQtYmI5ZS00MTlkLTg0YjQtMTAzNjBhZTE4MTVk"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[concept]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["optimize"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[simulatorName]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["ABCASim9b"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[halted]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[main.exceededCapacity || time(DAY) >= 36500]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[episodeStep]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[
-main.set_ResourceACapacity(action.nResA);
+								<Code><![CDATA[main.set_ResourceACapacity(action.nResA);
 main.set_ResourceBCapacity(action.nResB);
 main.set_MeanProcessDelay(action.processTime);
 main.set_ConveyorSpeed(action.conveyorSpeed);
@@ -9189,23 +9167,136 @@ main.resourceB.resetStats();]]></Code>
 
 			<Presentation>
 				<Text>
-					<Id>1589754415451</Id>
+					<Id>1589821859511</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-160</X><Y>190</Y>
+					<X>-260</X><Y>170</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[(Drag Main agent here)]]></Text>
+					<Color>-1973791</Color>
+					<Text><![CDATA[Drag Main agent here]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>2</Style>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Polyline>
+					<Id>1589821859519</Id>
+					<Name><![CDATA[polyline]]></Name>
+					<X>35</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-1973791</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>-10</X><Y>5</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>-2</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>25</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>25</X><Y>4</Y><Z>0</Z></Point>
+					   <Point><X>-2</X><Y>4</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+				<Text>
+					<Id>1589821859526</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>70</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1973791</Color>
+					<Text><![CDATA[Pan this direction]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Polyline>
+					<Id>1589821859532</Id>
+					<Name><![CDATA[polyline2]]></Name>
+					<X>-200</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-1973791</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>10</X><Y>5</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>-25</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>-25</X><Y>4</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>4</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+				<Text>
+					<Id>1589821859538</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>-430</X><Y>38</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1973791</Color>
+					<Text><![CDATA[Setup parameters]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -9626,28 +9717,6 @@ the product cost.]]></Text>
 			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
 
 			<Presentation>
-				<Image>
-					<Id>1589754415522</Id>
-					<Name><![CDATA[image1]]></Name>
-					<X>850</X><Y>0</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Width>130</Width>
-					<Height>126</Height>
-					<Rotation>0.0</Rotation>
-					<ImageFiles>
-						<ImageResourceReference>
-							<PackageName><![CDATA[activity_based_costing_analysis_bonsai]]></PackageName>
-							<ClassName><![CDATA[Bonsai.png]]></ClassName>
-						</ImageResourceReference>
-					</ImageFiles>
-					<OriginalSize>false</OriginalSize>
-				</Image>
 				<Text>
 					<Id>1589754415524</Id>
 					<Name><![CDATA[text1]]></Name>
@@ -9669,6 +9738,50 @@ the product cost.]]></Text>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Image>
+					<Id>1589819999668</Id>
+					<Name><![CDATA[image1]]></Name>
+					<X>810</X><Y>20</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Width>155</Width>
+					<Height>155</Height>
+					<Rotation>0.0</Rotation>
+					<ImageFiles>
+						<ImageResourceReference>
+							<PackageName><![CDATA[activity_based_costing_analysis_bonsai]]></PackageName>
+							<ClassName><![CDATA[bonsai-logo.png]]></ClassName>
+						</ImageResourceReference>
+					</ImageFiles>
+					<OriginalSize>false</OriginalSize>
+				</Image>
+				<Image>
+					<Id>1589821827472</Id>
+					<Name><![CDATA[image]]></Name>
+					<X>20</X><Y>470</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Width>200</Width>
+					<Height>75</Height>
+					<Rotation>0.0</Rotation>
+					<ImageFiles>
+						<ImageResourceReference>
+							<PackageName><![CDATA[activity_based_costing_analysis_bonsai]]></PackageName>
+							<ClassName><![CDATA[AnyLogic model logo dark.png]]></ClassName>
+						</ImageResourceReference>
+					</ImageFiles>
+					<OriginalSize>false</OriginalSize>
+				</Image>
 			</Presentation>
 
 			<Parameters>			
@@ -9698,18 +9811,20 @@ the product cost.]]></Text>
 			<VmArgs><![CDATA[]]></VmArgs>
 			<Code><![CDATA[// Create Engine, initialize random number generator:
 Engine engine = createEngine();
+// Change to reflect your model's time units:
 engine.setTimeUnit( DAY );
 // Random seed (unique simulation runs)
 engine.getDefaultRandomGenerator().setSeed( new Random().nextLong() );
 // Selection mode for simultaneous events:
 engine.setSimultaneousEventsSelectionMode( Engine.EVENT_SELECTION_LIFO );
+// Setup model start time/date:
 engine.setStartTime( 0.0 );
 engine.setStartDate( toDate( 2020, JANUARY, 1, 0, 0, 0 ) );
-// Stop time/date are defined 
+// Stop time/date are defined set as part of stop conditions
 // Create new root object:
 Wrapper root = new Wrapper( engine, null, null );
 root.setParametersToDefaultValues();
-
+// Parameters should be setup inside of connector object
 engine.start( root );
 // NOTE: Bonsai library will begin running your model]]></Code>
 		</CustomExperiment>
@@ -9803,7 +9918,7 @@ public class ModelObservation extends Observation {
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[Bonsai.png]]></Path>
+			<Path><![CDATA[bonsai-logo.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
@@ -9816,8 +9931,8 @@ public class ModelObservation extends Observation {
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[bonsaiconnector]]></LibraryName>
 		<VersionMajor>0</VersionMajor>
-		<VersionMinor>1</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>2</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
 	<CloudModelUuid><![CDATA[1aa9a167-bc87-441e-ab54-d31a3234245f]]></CloudModelUuid>
 </Model>

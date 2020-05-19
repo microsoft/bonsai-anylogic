@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001231701" AlpVersion="8.5.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.5.2.202001241823" AlpVersion="8.5.1">
 <Model>
 	<Id>1406111021221</Id>
 	<Name><![CDATA[Product Delivery (Bonsai)]]></Name>
@@ -3113,7 +3113,7 @@ main.waitingForProduct.add(value);]]></Code>
 					<Name><![CDATA[roundRectangle3]]></Name>
 					<X>0</X><Y>370</Y>
 					<Label><X>10</X><Y>10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
@@ -6287,6 +6287,7 @@ obs.Nashville_cost_per_product = main.manufacturingCenters(2).getTotalCostsPerPr
 
 obs.overall_average_turnaround = main.orderDurationMean;
 obs.overall_average_cost_per_product = main.costPerProductMean;
+obs.time = time();
 return obs;]]></Body>
 				</Function>
 			</Functions>
@@ -6420,7 +6421,7 @@ return obs;]]></Body>
 				<EmbeddedObject>
 					<Id>1589756136296</Id>
 					<Name><![CDATA[bonsaiConnector]]></Name>
-					<X>-190</X><Y>30</Y>
+					<X>-170</X><Y>20</Y>
 					<Label><X>-10</X><Y>-15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6479,45 +6480,24 @@ return obs;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[workspace]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["ac0f2321534a4360"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[brainName]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["pd-wrapper"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[brainVersion]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[4]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[accessKey]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["NWJiNWYwNjJhZTYzNDIwYzg5YjBjYzQyNDM5ZDQxMzA6OGJiZmRhZmQtYmI5ZS00MTlkLTg0YjQtMTAzNjBhZTE4MTVk"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[concept]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["optimize"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[simulatorName]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["PDSim4a"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[halted]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[time(DAY) >= 720]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[episodeStep]]></Name>
@@ -6609,23 +6589,136 @@ main.manufacturingCenters(2).set_nVehicles(action.Nashville_num_trucks);]]></Cod
 
 			<Presentation>
 				<Text>
-					<Id>1589754794860</Id>
+					<Id>1589822167217</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-160</X><Y>190</Y>
+					<X>-260</X><Y>170</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[(Drag Main agent here)]]></Text>
+					<Color>-1973791</Color>
+					<Text><![CDATA[Drag Main agent here]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
-						<Size>10</Size>
-						<Style>2</Style>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Polyline>
+					<Id>1589822167221</Id>
+					<Name><![CDATA[polyline]]></Name>
+					<X>35</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-1973791</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>-10</X><Y>5</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>-2</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>25</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>25</X><Y>4</Y><Z>0</Z></Point>
+					   <Point><X>-2</X><Y>4</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+				<Text>
+					<Id>1589822167225</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>70</X><Y>10</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1973791</Color>
+					<Text><![CDATA[Pan this direction]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Polyline>
+					<Id>1589822167232</Id>
+					<Name><![CDATA[polyline2]]></Name>
+					<X>-200</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-1973791</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>10</X><Y>5</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>10</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>-25</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>-25</X><Y>4</Y><Z>0</Z></Point>
+					   <Point><X>2</X><Y>4</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+				<Text>
+					<Id>1589822167236</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>-430</X><Y>38</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-1973791</Color>
+					<Text><![CDATA[Setup parameters]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -7025,28 +7118,6 @@ on real roads, and routes are created when vehicles start moving to destinations
 			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
 
 			<Presentation>
-				<Image>
-					<Id>1589754794894</Id>
-					<Name><![CDATA[image1]]></Name>
-					<X>1060</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Width>130</Width>
-					<Height>126</Height>
-					<Rotation>0.0</Rotation>
-					<ImageFiles>
-						<ImageResourceReference>
-							<PackageName><![CDATA[product_delivery_bonsai]]></PackageName>
-							<ClassName><![CDATA[Bonsai.png]]></ClassName>
-						</ImageResourceReference>
-					</ImageFiles>
-					<OriginalSize>false</OriginalSize>
-				</Image>
 				<Text>
 					<Id>1589754794896</Id>
 					<Name><![CDATA[text1]]></Name>
@@ -7068,6 +7139,50 @@ on real roads, and routes are created when vehicles start moving to destinations
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Image>
+					<Id>1589820012121</Id>
+					<Name><![CDATA[image1]]></Name>
+					<X>830</X><Y>20</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Width>155</Width>
+					<Height>155</Height>
+					<Rotation>0.0</Rotation>
+					<ImageFiles>
+						<ImageResourceReference>
+							<PackageName><![CDATA[product_delivery_bonsai]]></PackageName>
+							<ClassName><![CDATA[bonsai-logo.png]]></ClassName>
+						</ImageResourceReference>
+					</ImageFiles>
+					<OriginalSize>false</OriginalSize>
+				</Image>
+				<Image>
+					<Id>1589822461809</Id>
+					<Name><![CDATA[image]]></Name>
+					<X>20</X><Y>500</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Width>200</Width>
+					<Height>75</Height>
+					<Rotation>0.0</Rotation>
+					<ImageFiles>
+						<ImageResourceReference>
+							<PackageName><![CDATA[product_delivery_bonsai]]></PackageName>
+							<ClassName><![CDATA[AnyLogic model logo dark.png]]></ClassName>
+						</ImageResourceReference>
+					</ImageFiles>
+					<OriginalSize>false</OriginalSize>
+				</Image>
 			</Presentation>
 
 			<Parameters>			
@@ -7097,19 +7212,22 @@ on real roads, and routes are created when vehicles start moving to destinations
 			<VmArgs><![CDATA[]]></VmArgs>
 			<Code><![CDATA[// Create Engine, initialize random number generator:
 Engine engine = createEngine();
+// Change to reflect your model's time units:
 engine.setTimeUnit( HOUR );
 // Random seed (unique simulation runs)
 engine.getDefaultRandomGenerator().setSeed( new Random().nextLong() );
 // Selection mode for simultaneous events:
 engine.setSimultaneousEventsSelectionMode( Engine.EVENT_SELECTION_LIFO );
+// Setup model start time/date:
 engine.setStartTime( 0.0 );
 engine.setStartDate( toDate( 2020, JANUARY, 1, 0, 0, 0 ) );
-// Stop time/date are defined 
+// Stop time/date are defined set as part of stop conditions
 // Create new root object:
 Wrapper root = new Wrapper( engine, null, null );
 root.setParametersToDefaultValues();
-
-engine.start( root );]]></Code>
+// Parameters should be setup inside of connector object
+engine.start( root );
+// NOTE: Bonsai library will begin running your model]]></Code>
 		</CustomExperiment>
 	</Experiments>
 	<JavaClasses>
@@ -7199,6 +7317,8 @@ public class ModelObservation extends Observation {
 	// averages of turnaround and cost per product for all centers
 	public double overall_average_turnaround;
 	public double overall_average_cost_per_product;
+	
+	public double time;
 } 
 ]]></Text>
 		</JavaClass>
@@ -7221,7 +7341,7 @@ public class ModelObservation extends Observation {
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[Bonsai.png]]></Path>
+			<Path><![CDATA[bonsai-logo.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
@@ -7234,8 +7354,8 @@ public class ModelObservation extends Observation {
     <RequiredLibraryReference>
 		<LibraryName><![CDATA[bonsaiconnector]]></LibraryName>
 		<VersionMajor>0</VersionMajor>
-		<VersionMinor>1</VersionMinor>
-		<VersionBuild>1</VersionBuild>
+		<VersionMinor>2</VersionMinor>
+		<VersionBuild>0</VersionBuild>
     </RequiredLibraryReference>
 	<CloudModelUuid><![CDATA[40299513-8f20-4e86-817f-3a6358b9eaf6]]></CloudModelUuid>
 </Model>
