@@ -3,77 +3,72 @@ inkling "2.0"
 using Number
 using Math
 
-# the state from the AnyLogic model
+
 type SimState {
     arrivalRate: number<0.5 .. 2.0>,
-	nResA: Number.Int32<1 .. 20>,
-	nResB: Number.Int32<1 .. 20>,
-	utilResA: number,
-	utilResB: number,
-	idleCostResA: number<0.1 .. 20>,
-	idleCostResB: number<0.1 .. 20>,
-	busyCostResA: number<0.1 .. 20>,
-	busyCostResB: number<0.1 .. 20>,
+	
+	nResA: number<1 .. 20>,
+	nResB: number<1 .. 20>,
 	processTime: number<1.0 .. 12.0>,
-	conveyorSpeed: Number.Int32<0 .. 15>,
-	costPerProduct: number<1.0 .. 15.0>,
+	conveyorSpeed: number<0.01 .. 1.0>,
+	
+	utilResA: number<0 .. 1>,
+	utilResB: number<0 .. 1>,
+	
+	ratioFullQueueA: number<0 .. 1>,
+	ratioFullQueueB: number<0 .. 1>,
+	
+	recentNProducts: number,
+	
+	ratioCostIdleA: number<0 .. 1>,
+	ratioCostIdleB: number<0 .. 1>,
+	ratioCostWaiting: number<0 .. 1>,
+	ratioCostProcessing: number<0 .. 1>,
+	ratioCostMoving: number<0 .. 1>,
+	
+	costPerProduct: number,
+	exceededCapacity: number<0,1,>,
+	time: number<0 .. 36500>
 }
 
-# action from the brain
 type Action {
     nResA: number<1 .. 20>,
 	nResB: number<1 .. 20>,
 	processTime: number<1.0 .. 12.0>,
-	conveyorSpeed: number<1.0 .. 15.0>,
+	conveyorSpeed: number<0.01 .. 1.0>,
 }
 
-
-function Reward(obs: SimState) {
-
-    #our goal is to target the reward of 1 
-	#the minimum price in the model is $6.93
-
-    var min_price = 6.93
-    
-	if(obs.costPerProduct != 0)
-	{
-		return (min_price/obs.costPerProduct)
-	}
-
-	return 0
-}
-
-#configuration values for initializing the simulator
 type SimConfig {
 	arrivalRate: number,
-	existenceCostPH: number,
-	resABusyCostPH: number,
-	resAIdleCostPH: number,
-	resBBusyCostPH: number,
-	resBIdleCostPH: number,
-	relativeProcessCost: number,
-	relativeMoveCost: number,
+	initNResA: number,
+	initNResB: number,
+	initProcessTime: number,
+	initConveyorSpeed: number,
+	sizeBufferQueues: number
 }
 
 simulator Simulator(action: Action, config: SimConfig): SimState {
+	#uncomment the line below and put the name of the simulator
+	#after you have uploaded your model
 
+	#package "al-uploaded-model"
 }
 
 #SimAction is the values translated for the sim
 #we do not need ranges here
 type SimAction {
-	nResA: Number.Int32,
+	nResA: number,
 	nResB: number,
 	processTime: number,
 	conveyorSpeed: number,
 }
 
-#rounds the value to the nearest first decimal
-function RoundToNearestTenth(rValue: number)
+#rounds the value
+function RoundToNearest(rValue: number, nPlaces: number)
 {
 	var baseInteger = Math.Floor(rValue)
 	var decimalValue = rValue - baseInteger
-	var tenthsValue = decimalValue * 10
+	var tenthsValue = decimalValue * (10 ** nPlaces)
 	var iTenthsPosition = Math.Floor(tenthsValue)
 	var hundrethsPos = tenthsValue - iTenthsPosition
 
@@ -88,22 +83,55 @@ function RoundToNearestTenth(rValue: number)
 		newTenthsValue = iTenthsPosition
 	}
 
-	var finalValue = baseInteger + (newTenthsValue * .1)
+	var finalValue = baseInteger + (newTenthsValue * (10**(-nPlaces)))
 
 	return finalValue
 
 }
 
-#performs rounding for the simulator
 function TranslateBonsaiActiontoSimAction(a: Action) : SimAction
 {
 	return 
 	{		
-		nResA: Math.Floor(a.nResA+0.5), #if the value is <.5, will go to lower integer number. If >=.5, will resolve to higher integer number
+		nResA: Math.Floor(a.nResA+0.5),
 		nResB: Math.Floor(a.nResB+0.5),
-		processTime: RoundToNearestTenth(a.processTime),
-		conveyorSpeed: RoundToNearestTenth(a.conveyorSpeed)
+		processTime: RoundToNearest(a.processTime, 1),
+		conveyorSpeed: RoundToNearest(a.conveyorSpeed, 2)
 	}
+}
+
+function Terminal(obs:SimState)
+{
+	if(obs.exceededCapacity == 1)
+	{
+		return true
+	}
+	
+	if(obs.time >= 365 * 100)
+	{
+	 	return true
+	}
+
+	return false
+}
+
+function Reward(obs: SimState) {
+	# give harsh penalty if exceeded capacity
+	if (obs.exceededCapacity == 1) {
+		return -1
+	}
+	
+	# give between [0 .. -0.5] penalty for having a fuller queue
+	var fullnessPenalty = -0.5 * (obs.ratioFullQueueA ** 3)
+	
+	# give between [0 .. 1] reward for having a smaller cost per product
+	# (not sure if Bonsai has 'e' in the Math lib)
+	var e = 2.7182818284
+	var cppReward = (-1 / (1 + e**(-0.12*obs.costPerProduct + 8))) + 1
+	# equation reference: https://www.desmos.com/calculator/lmh2fmb2le
+	
+	return fullnessPenalty + cppReward
+	
 }
 
 graph (input: SimState): Action {
@@ -111,19 +139,18 @@ graph (input: SimState): Action {
     concept optimize(input): Action {
         curriculum {
             source Simulator
-			reward Reward
 			action TranslateBonsaiActiontoSimAction
+			reward Reward
+			terminal  Terminal
 
 			lesson `Vary Arrival Rate` {
 				scenario {
 					arrivalRate: number<0.5 .. 2.0 step .1>,
-					existenceCostPH: 1.0,
-					resABusyCostPH: 3.0,
-					resAIdleCostPH: 2.0,
-					resBBusyCostPH: 5.0,
-					resBIdleCostPH: 2.0,
-					relativeProcessCost: 100.0,
-					relativeMoveCost: 0.3,
+			 		initNResA: 20,
+			 		initNResB: 20,
+			 		initProcessTime: 1.0,
+			 		initConveyorSpeed: 0.1,
+			 		sizeBufferQueues: 45
 				}
 			}
 		}
