@@ -321,7 +321,7 @@
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1588008430358</Id>
-							<Label><![CDATA[Training a Bons.ai brain]]></Label>
+							<Label><![CDATA[Training a bonsai brain]]></Label>
 							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -3237,8 +3237,9 @@ productCount++;]]></Code>
 if (auxQueueA.size() >= auxQueueA.capacity) {
 	// set the flag
 	exceededCapacity = true;
-	// and stop the simulation
-	finishSimulation();
+	// and stop the simulation (if not training)
+	if (!inBonsaiTraining)
+		finishSimulation();
 }]]></Code>
 							</Value>
 						</Parameter>
@@ -9044,33 +9045,21 @@ return obs;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[playback]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[false]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[brainAddress]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["https://gtm-al-abca.azurewebsites.net/v1/prediction"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[workspace]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[brainName]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[brainVersion]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[accessKey]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[concept]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[simulatorName]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA["ABCA sim"]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[halted]]></Name>
@@ -9483,7 +9472,7 @@ main.resourceB.resetStats();]]></Code>
 		<!--   =========   Simulation Experiment   ========  -->
 		<SimulationExperiment ActiveObjectClassId="1208168597834">
 			<Id>1589746374599</Id>
-			<Name><![CDATA[Simulation]]></Name>
+			<Name><![CDATA[OriginalSimulation]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
@@ -9498,7 +9487,7 @@ main.resourceB.resetStats();]]></Code>
 				<Text>
 					<Id>1589746374601</Id>
 					<Name><![CDATA[text5]]></Name>
-					<X>40</X><Y>70</Y>
+					<X>40</X><Y>150</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9640,6 +9629,117 @@ the product cost.]]></Text>
 					</ImageFiles>
 					<OriginalSize>false</OriginalSize>
 				</Image>
+				<Text>
+					<Id>1594396783561</Id>
+					<Name><![CDATA[text6]]></Name>
+					<X>40</X><Y>60</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[This simulation experiment
+It will execute the original simulation experiment without connecting to bonsai.
+If you are trying to connect to the bonsai platform, 
+    you'll need to run either the]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1594397260835</Id>
+					<Name><![CDATA[text7]]></Name>
+					<X>197</X><Y>60</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[uses Main as the top-level agent, not the wrapper.]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Line>
+					<Id>1594397301259</Id>
+					<Name><![CDATA[line]]></Name>
+					<X>315</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>170</Dx>
+					<Dy>0</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Text>
+					<Id>1594397321828</Id>
+					<Name><![CDATA[text8]]></Name>
+					<X>213</X><Y>105</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[AnimatedExperiment             HeadlessExperiment.]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1594397353747</Id>
+					<Name><![CDATA[text9]]></Name>
+					<X>337</X><Y>105</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[or the]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 			<Parameters>			
@@ -9730,7 +9830,7 @@ the product cost.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-12490271</Color>
-					<Text><![CDATA[Wrapper model for Bons.ai training]]></Text>
+					<Text><![CDATA[Wrapper model for bonsai training/playback]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>24</Size>
@@ -9782,6 +9882,36 @@ the product cost.]]></Text>
 					</ImageFiles>
 					<OriginalSize>false</OriginalSize>
 				</Image>
+				<Text>
+					<Id>1594397478320</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>50</X><Y>90</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[This simulation experiment uses the Wrapper agent as the top-level agent.
+
+If using this experiment for training, you should first run this model. 
+Then, you will be instructed how to connect to your model on the bonsai web platform.
+Once connected, training will automatically begin. 
+
+During training, the model may be sent back to this screen. 
+When this happens, it means a halted condition was met in the previous run and the model is restarting to begin a new episode.
+
+]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>12</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 			<Parameters>			
@@ -9809,24 +9939,39 @@ the product cost.]]></Text>
 			<MaximumMemory>512</MaximumMemory>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<VmArgs><![CDATA[]]></VmArgs>
-			<Code><![CDATA[// Create Engine, initialize random number generator:
+			<Code><![CDATA[// Running this experiment will connect to the bonsai platform in 
+//	headless mode (you will only see feedback in the console).
+// This is the experiment that should be exported before 
+//	uploading to the bonsai platform or for scaling.
+
+// Create Engine and setup the engine:
 Engine engine = createEngine();
-// Change to reflect your model's time units:
 engine.setTimeUnit( DAY );
-// Random seed (unique simulation runs)
+
+// Random seed (unique simulation runs):
 engine.getDefaultRandomGenerator().setSeed( new Random().nextLong() );
+
 // Selection mode for simultaneous events:
 engine.setSimultaneousEventsSelectionMode( Engine.EVENT_SELECTION_LIFO );
-// Setup model start time/date:
+
+// Set start time/date of the model:
 engine.setStartTime( 0.0 );
 engine.setStartDate( toDate( 2020, JANUARY, 1, 0, 0, 0 ) );
-// Stop time/date are defined set as part of stop conditions
+
+// Stop time/date are defined set as part of halted conditions 
+// 	(in the Bonsai connector or on the bonsai platform)
+
 // Create new root object:
 Wrapper root = new Wrapper( engine, null, null );
 root.setParametersToDefaultValues();
+
 // Parameters should be setup inside of connector object
+
+// Start the engine:
 engine.start( root );
-// NOTE: Bonsai library will begin running your model]]></Code>
+
+// NOTE: At this point, the Bonsai connector library (in the Wrapper agent)
+//	will begin running and controlling your model.]]></Code>
 		</CustomExperiment>
 	</Experiments>
 	<JavaClasses>
@@ -9932,7 +10077,7 @@ public class ModelObservation extends Observation {
 		<LibraryName><![CDATA[bonsaiconnector]]></LibraryName>
 		<VersionMajor>0</VersionMajor>
 		<VersionMinor>2</VersionMinor>
-		<VersionBuild>0</VersionBuild>
+		<VersionBuild>3</VersionBuild>
     </RequiredLibraryReference>
 	<CloudModelUuid><![CDATA[1aa9a167-bc87-441e-ab54-d31a3234245f]]></CloudModelUuid>
 </Model>
