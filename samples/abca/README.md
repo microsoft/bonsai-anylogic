@@ -13,12 +13,8 @@ Cost accumulated by a product is broken down into several categories for analysi
 -	Regular simulation optimization (SO) is not capable of adaptive change of parameters in order to produce optimum results over time
 
 ### Observation space
--	Arrival rate 
--	Number of resource A
--	Number of resource B
--	Utilization of resource A & B 
--	Idle and busy costs for resource A and B
--	process time, conveyor speed 
+Although there are many aspects of the simulator, the `arrival rate` is what is used to by the brain to make decisions. 
+
 
 ### Action space
 -	Number of resource A and B
@@ -115,7 +111,7 @@ Now click **Train**. Since you indicated the package name you do not need to sel
 In a few minutes time you will see several simulators connect to and train your brain.  
 
 # Sample Results
-tbd
+You can read about how the Bonsai brain performed against the default AnyLogic optimizer in the `ABCA-Optimization-Writeup.docx` file.
 
 # Using Bonsai Assessment with Your Model
 Starting an Assessment session is similar to starting a training session. Start your AnimatedExperiment  and wait for it to register. In the Bonsai UI, using your already-trained brain, click the **Assessment** button. Then select the name of your simulator
