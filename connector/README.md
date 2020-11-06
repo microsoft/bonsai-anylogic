@@ -125,3 +125,9 @@ type Action {
 defined in your inkling for your brain in Bonsai.
 
 > It is a recommended best practice to indicate the ranges of your actions in inkling. This will increase the speed of your brain training. 
+
+# v2.6 notes
+
+- Introduces the ability to have the initial start event, or not. This is useful depending on whether your simulator is event or time based.
+- Adds the ability to edit the timeout to Bonsai
+- Resolves issue with animated experiments training for long durations 
