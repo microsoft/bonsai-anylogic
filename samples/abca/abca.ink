@@ -6,30 +6,30 @@ using Math
 
 #SimState has the same properties as the ModelObservation class in the model
 type SimState {
-    arrivalRate: number<0.5 .. 2.0>,
+    arrivalRate: number,
     
-    nResA: number<1 .. 20>,
-    nResB: number<1 .. 20>,
-    processTime: number<1.0 .. 12.0>,
-    conveyorSpeed: number<0.01 .. 1.0>,
+    nResA: number,
+    nResB: number,
+    processTime: number,
+    conveyorSpeed: number,
     
-    utilResA: number<0 .. 1>,
-    utilResB: number<0 .. 1>,
+    utilResA: number,
+    utilResB: number,
     
-    ratioFullQueueA: number<0 .. 1>,
-    ratioFullQueueB: number<0 .. 1>,
+    ratioFullQueueA: number,
+    ratioFullQueueB: number,
     
     recentNProducts: number,
     
-    ratioCostIdleA: number<0 .. 1>,
-    ratioCostIdleB: number<0 .. 1>,
-    ratioCostWaiting: number<0 .. 1>,
-    ratioCostProcessing: number<0 .. 1>,
-    ratioCostMoving: number<0 .. 1>,
+    ratioCostIdleA: number,
+    ratioCostIdleB: number,
+    ratioCostWaiting: number,
+    ratioCostProcessing: number,
+    ratioCostMoving: number,
     
     costPerProduct: number,
-    exceededCapacity: number<0,1,>,
-    time: number<0 .. 365>
+    exceededCapacity: number,
+    time: number
 }
 
 #the ObservableState is what the brain sees from the simulator
