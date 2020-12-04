@@ -3614,7 +3614,7 @@ if (auxQueueA.size() >= auxQueueA.capacity) {
 						<Parameter>
 							<Name><![CDATA[workspace]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA["<bonsai_workspace>"]]></Code>
+								<Code><![CDATA["<bonsai_workspace_id>"]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
