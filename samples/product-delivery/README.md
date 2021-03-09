@@ -48,7 +48,7 @@ These costs are recorded in truckCosts,  openCosts, productionCosts, and incompl
 | Observations           |  Chicago_is_open, Pittsburg_is_open, Nashville_is_open, Chicago_num_trucks, Pittsburg_num_trucks, Nashville_num_trucks, Chicago_production_rate, Pittsburg_production_rate, Nashville_production_rate, Chicago_util_trucks, Pittsburg_util_trucks, Nashville_util_trucks, Chicago_inventory_level, Pittsburg_inventory_level, Nashville_inventory_level, Chicago_orders_queueing, Pittsburg_orders_queueing, Nashville_orders_queueing, Chicago_average_turnaround, Pittsburg_average_turnaround, Nashville_average_turnaround, Pittsburg_cost_per_product, Nashville_cost_per_product, overall_average_turnaround, overall_average_cost_per_product | |
 | Actions                | Chicago_is_open, Pittsburg_is_open, Nashville_is_open, Chicago_num_trucks, Pittsburg_num_trucks, Nashville_num_trucks, Chicago_production_rate, Pittsburg_production_rate, Nashville_production_rate | |
 | Control Frequency      | Every day | |
-| Episode configurations | OpenCost_PerHour, ProductionCost_PerHour, IncompleteOrderPenalty_PerHour, TruckCost_PerHour | |
+| Episode configurations | OpenCost_PerHour, ProductionCost_PerHour, IncompleteOrderPenalty_PerHour, TruckCost_PerHour, FirstActionTime_Days, RecurrenceActionTime_Days, RollingWindowSize_Days | |
 | Iteration              | Every 24 hours||
 | Episode                | 30 days or 720 hours
 
