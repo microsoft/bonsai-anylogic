@@ -44,14 +44,11 @@ Given a wide range of demands by distribution centers, demonstrate a BRAIN which
 
 ### Benchmark
 
-Use the AnyLogic Internal Optimizer as the benchmark performance.
-
-![image info](/Images/benchmark-1.png)
-![image info](/Images/benchmark-2.png)
+Use the AnyLogic Internal Optimizer for the benchmark performance.
 
 ## Problem simulation description
 
-The model simulates delivery of products from three manufacturing center to fifteen distribution centers in USA written in AnyLogic. The orders can be of varying sizes thar are uniformly distributed between 500 and 1000 units, and can uniformly occur every 2 to 10 days. Once an order is received, the reinforcement learning agent will determine how to fulfill the order most time and cost effectively. Each manufacturing center produces product with a set rate given by the productionRate parameter inside the ManufacturingCenter agent type. If the manufacturing center that receives the order is open but doesn’t have enough in stock, the order will wait in a queue denoted by the ordersQueue block inside the ManufacturingCenter agent type until enough products are in the inventory to trigger the shipment. It is worth reminding that the shortage of product at any specific manufacturing center does not lead to a transfer of the order to another manufacturing center. The cost associated with different sections of a manufacturing center are as follows:
+The model is developed in AnyLogic and simulates delivery of products from three manufacturing centers to fifteen distribution centers in USA. The orders can be of varying sizes that are uniformly distributed between 500 and 1000 units, and can uniformly occur every 2 to 10 days. Once an order is received, the reinforcement learning agent will determine how to fulfill the order in the most time and cost effective manner. Each manufacturing center produces products with a rate given by the productionRate parameter inside the ManufacturingCenter agent type. If the manufacturing center that receives the order is open, but doesn’t have enough products in stock, the order will wait in a queue denoted by the ordersQueue block inside the ManufacturingCenter agent type until enough products are in the inventory to trigger the shipment. It is worth reminding that the shortage of products at any specific manufacturing center does not lead to a transfer of the order to another manufacturing center.
 
 
 ### Problem description
@@ -74,7 +71,7 @@ The model simulates delivery of products from three manufacturing center to fift
 * **MC_util_trucks** refers to the truck utilization rate at the manufacturing center.
 * **MC_inventory_level** refers to the inventory level at the manufacturing center.
 * **MC_orders_queueing** refers to the sum of all order sizes queueing at the manufacturing center.
-* **MC_average_turnaround** refers to the average turnaround time at the manufacturing center
+* **MC_average_turnaround** refers to the average turnaround time at the manufacturing center.
 * **MC_cost_per_product** refers to the total accumulated cost at the manufacturing center.
 * **overall_average_turnaround** refers to the average turnaround time for all the manufacturing centers.
 * **overall_average_cost_per_product** refers to the average total accumulated cost for all the manufacturing centers.
@@ -84,7 +81,7 @@ The model simulates delivery of products from three manufacturing center to fift
 
 ### High level solution architecture
 
-The objective is to reduce the overall average turnaround time so brain receives higher reward when the turnaround time is lower. Moreover, the brain would further receive a higher reward when when truck utilization is higher. The episode is terminated when the overall cost per product across all manufacturing centers exceeds a certain threshold.
+The objective is to reduce the overall average turnaround time so brain receives higher reward when the turnaround time is lower. Moreover, the brain would further receive a higher reward when when truck utilization is higher. The episode is terminated early when the overall cost per product across all manufacturing centers exceeds a certain threshold.
 
 The reward and terminal functions are defined as
 
