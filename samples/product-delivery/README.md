@@ -67,6 +67,8 @@ The model simulates delivery of products from three manufacturing center to fift
 | Iteration              | Every 3 days | |
 | Episode                | 30 days or 720 hours
 
+#### Definition of states
+
 * **MC_is_open** refers to whether manufacturing center accepts new orders or not.
 * **MC_num_trucks** refers to the number of trucks allocated to the manufacturing center.
 * **MC_production_rate** refers to the production rate at the manufacturing center.
