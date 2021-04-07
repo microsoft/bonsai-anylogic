@@ -29,10 +29,10 @@ T<sub><em>receipt</em></sub> : Time the order has been received by the distribut
 T<sub><em>turnaround</em></sub>  = T<sub><em>receipt</em></sub> - T<sub><em>order</em></sub>
 
 For each manufacturing center, the cost consists of
-- Truck costs: For every hour that the manufacturing center is open or has orders inside of it, the total truck cost is accumulated by number of vehicles * hourly truck cost.
-- Open costs: For every hour that the manufacturing center is open, the total open cost is accumulated by the hourly open cost.
-Production costs: For every hour that the manufacturing center is open or has orders inside of it, the total production cost is accumulated by the production rate - hourly production cost
-- Incomplete costs: For every hour that there are orders in queue to be processed at the manufacturing center, the incomplete order cost is accumulated by the number of orders in the queue * the hourly incomplete order penalty
+- **Truck costs:** For every hour that the manufacturing center is open or has orders inside of it, the total truck cost is accumulated by number of vehicles * hourly truck cost.
+- **Open costs:** For every hour that the manufacturing center is open, the total open cost is accumulated by the hourly open cost.
+- **Production costs:** For every hour that the manufacturing center is open or has orders inside of it, the total production cost is accumulated by the production rate * hourly production cost.
+- **Incomplete costs:** For every hour that there are orders in queue to be processed at the manufacturing center, the incomplete order cost is accumulated by the number of orders in the queue * the hourly incomplete order penalty.
 
 ### Business problem
 
