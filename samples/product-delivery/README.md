@@ -12,7 +12,7 @@ The supply chain includes three manufacturing centers (Chicago, Nashville, Pitts
 <img src="Images/scenario.png" alt="drawing" width="800"/>
 
 There is a fleet of 3 trucks available at each manufacturing center to deliver the products to the distribution centers. When a manufacturing center receives an order from a distribution center, it checks the number of available products in storage.
-If the requested amount of product is available and there are trucks available at the manufacturing center, it sends loaded trucks to the distribution center. Otherwise, the order waits until the factory produces the sufficient amount of products or there are trucks available. The orders are always sent to the closest manufacturing center and the shortage of product at any specific manufacturing center does not lead to a transfer of the order to another manufacturing center. Upon closure of one manufacturing center, its order will be transferred to the next closest manufacturing center.
+If the requested amount of product is available and there are trucks available at the manufacturing center, it sends loaded trucks to the distribution center. Otherwise, the order waits until the factory produces the sufficient amount of products or there are trucks available. The orders are always sent to the closest manufacturing center and the shortage of product at any specific manufacturing center does not lead to a transfer of the order to another manufacturing center. Upon closure of one manufacturing center or in case of not accepting new orders, its order will be transferred to the next closest manufacturing center.
 
 <img src="Images/order-distribution.png" alt="drawing" width="1000"/>
 
