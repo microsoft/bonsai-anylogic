@@ -262,7 +262,7 @@ function Terminal(state: SimState) {
 }
 
 simulator Simulator(action: SimAction, config: SimConfig): SimState {
-    package "PD-sim-v3"
+   
 }
  
 graph (input: ObservableState): SimAction {
