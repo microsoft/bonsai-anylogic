@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.0.202011181926" AlpVersion="8.7.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.2.202103191534" AlpVersion="8.7.0">
 <Model>
 	<Id>1208168597833</Id>
 	<Name><![CDATA[Activity Based Costing Analysis (Bonsai)]]></Name>
@@ -3598,18 +3598,21 @@ if (auxQueueA.size() >= auxQueueA.capacity) {
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[enable]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[bonsaiMode >= 0]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[enableLogging]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[playback]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[bonsaiMode == 1]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[brainAddress]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA[playbackURL]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[workspace]]></Name>

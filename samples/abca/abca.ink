@@ -37,7 +37,7 @@ type SimConfig {
     sizeBufferQueues: number
 }
 simulator Simulator(action: Action, config: SimConfig): SimState {
-    #package "ABCA_Sim_v2"
+    
 }
 # SimAction is the values translated for the sim.
 # We do not need ranges here.
