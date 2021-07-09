@@ -1067,20 +1067,7 @@
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double dt = time() - timeUpdateIdleCosts; //period duration
-/*for (int i = 0; i < resourceA.capacity; i++) {
-	if (!resourceA.getUnit(i).isBusy()) {
-		accumIdleCostA += dt * resourceA.getUnit(i).idleCostPerHour;
-	}
-}
-*/
 accumIdleCostA += dt * resourceA.idle() * IdleCostPerHourA;
-
-/*for (int i = 0; i < resourceB.capacity; i++) {
-	//if (!resourceB.getUnit(i).isBusy()) {
-		accumIdleCostB += dt * resourceB.getUnit(i).idleCostPerHour;
-	}
-}
-*/
 accumIdleCostB += dt * resourceB.idle() * IdleCostPerHourB;
 timeUpdateIdleCosts = time();]]></Body>
 				</Function>
@@ -1134,18 +1121,27 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// only force RL events if in training
-// (playback events are triggered by changing the slider)
+					<Body><![CDATA[// This function schedules the triggers for bonsai to take actions in the model.
+
+
+/*
+Only execute when the 'bonsaiMode' parameter is in training mode (0);
+	in deactivated mode (-1), the model will execute as if without bonsai;
+	in playback mode (1), calls to the brain are triggered on slider updates.
+*/
 if (bonsaiMode != 0)
 	return;
 
-// #1 on startup to set configuration
+// When using an unmanaged (locally hosted) sim, the first action is replaced with the configuration.
+// In this case, create an extra event at time 0.
+if (getEngine().getExperiment() instanceof ExperimentSimulation) {
+	create_RLEvent(0, DAY);
+}
+
+// Schedule the first prediction at the model start.
 create_RLEvent(0, DAY);
 
-// #2 on startup to make first prediction
-create_RLEvent(0, DAY);
-
-// #3 at 6 months to evaluate prediction
+// Schedule an event at the end to evaluate the prediction before terminating the model.
 create_RLEvent(6, MONTH);]]></Body>
 				</Function>
 			</Functions>
@@ -3287,7 +3283,8 @@ productCount++;]]></Code>
 if (auxQueueA.size() >= auxQueueA.capacity) {
 	// set the flag
 	exceededCapacity = true;
-	// and force-stop the simulation (if not in training)
+	// and force-stop the simulation when not in training
+	// (during training, the terminal condition will come from bonsai)
 	if (bonsaiMode != 0)
 		finishSimulation();
 }]]></Code>
@@ -3467,7 +3464,7 @@ if (auxQueueA.size() >= auxQueueA.capacity) {
 						<Parameter>
 							<Name><![CDATA[enable]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[bonsaiMode >= 0]]></Code>
+								<Code><![CDATA[bonsaiMode >= 0 // training (0) or playback (1)]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -3476,7 +3473,7 @@ if (auxQueueA.size() >= auxQueueA.capacity) {
 						<Parameter>
 							<Name><![CDATA[playback]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[bonsaiMode == 1]]></Code>
+								<Code><![CDATA[bonsaiMode == 1  // playback]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -3484,15 +3481,9 @@ if (auxQueueA.size() >= auxQueueA.capacity) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[workspace]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["<bonsai_workspace_id>"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[accessKey]]></Name>
-							<Value Class="CodeValue">
-								<Code><![CDATA["<bonsai_access_key>"]]></Code>
-							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[simulatorName]]></Name>
@@ -7531,15 +7522,11 @@ STRUCTURE]]></Text>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
 						<EnableExpression><![CDATA[bonsaiMode != 0 // bonsai deactivated or playback]]></EnableExpression>
-						<ActionCode><![CDATA[if (bonsaiMode == 1) { // playback (costs reset as part of action)
-	try {
-		RLExperiment.takeAction(this);
-	} catch (NullPointerException e) { // in case any issues
-		error("There was an issue with either the sent observation or the received action.\nConfirm the output of the provided brain matches with the fields in the RLExperiment.");
-	}
-} else { // bonsai deactivated
-	resetCosts();
-}]]></ActionCode>
+						<ActionCode><![CDATA[if (bonsaiMode == 1) { // playback
+	RLExperiment.takeAction(this);
+}
+	
+resetCosts();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[ArrivalRate]]></DefaultValueCode>
@@ -7563,7 +7550,7 @@ STRUCTURE]]></Text>
 					<BasicProperties Width="95" Height="25">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>false</Enabled>
-						<EnableExpression><![CDATA[bonsaiMode == -1 // bonsai deactivated]]></EnableExpression>
+						<EnableExpression><![CDATA[bonsaiMode == -1 // enabled when running the "original" sim (bonsai deactivated)]]></EnableExpression>
 						<ActionCode><![CDATA[resetCosts();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -7588,7 +7575,7 @@ STRUCTURE]]></Text>
 					<BasicProperties Width="95" Height="25">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>false</Enabled>
-						<EnableExpression><![CDATA[bonsaiMode == -1 // bonsai deactivated]]></EnableExpression>
+						<EnableExpression><![CDATA[bonsaiMode == -1 // enabled when running the "original" sim (bonsai deactivated)]]></EnableExpression>
 						<ActionCode><![CDATA[resetCosts();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -7613,7 +7600,7 @@ STRUCTURE]]></Text>
 					<BasicProperties Width="95" Height="25">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>false</Enabled>
-						<EnableExpression><![CDATA[bonsaiMode == -1 // bonsai deactivated]]></EnableExpression>
+						<EnableExpression><![CDATA[bonsaiMode == -1 // enabled when running the "original" sim (bonsai deactivated)]]></EnableExpression>
 						<ActionCode><![CDATA[resetCosts();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -7638,7 +7625,7 @@ STRUCTURE]]></Text>
 					<BasicProperties Width="95" Height="25">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>false</Enabled>
-						<EnableExpression><![CDATA[bonsaiMode == -1 // bonsai deactivated]]></EnableExpression>
+						<EnableExpression><![CDATA[bonsaiMode == -1 // enabled when running the "original" sim (bonsai deactivated)]]></EnableExpression>
 						<ActionCode><![CDATA[resetCosts();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -9890,7 +9877,7 @@ the product cost.]]></Text>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[To use this model, paste the URL of your exported brain into the properties of this experiment as a String (in "double quotes").
+					<Text><![CDATA[To use this experiment, paste the URL of your exported brain as a string (in double quotes) into the properties of the bonsai connector object inside of Main.
 
 After starting the simulation run, you can use the slider to adjust the arrival rate. 
 Once you update the slider, the code `RLExperiment.takeAction(this);` will be executed. This single line of code will do the following:
@@ -10230,8 +10217,9 @@ Note: If your defined observation contains more fields than the brain was traine
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[To use this model, paste your bonsai workspace ID and access key into the properties of this experiment. 
-You may also optionally set the simulator name - this is what will appear in the bonsai platform; its purpose is only to identify the local simulator when starting training.
+					<Text><![CDATA[To use this experiment, paste your bonsai workspace ID and access key into the fields of the bonsai connector in the Main agent.
+In the connector, you can also optionally set the simulator name - this is what will appear in the bonsai platform; 
+    its purpose is only to identify the local simulator when you start the training.
 
 After starting this simulation, follow the listed instructions that appear. 
 
@@ -10240,7 +10228,7 @@ As this control includes starting/stopping your model, it's advised not to make 
 Attempting to pause the model may interrupt the connection.
 
 
-This method of training is meant primarily for debugging purposes. For optional connection and training speed, it's advised to upload your model to Azure.]]></Text>
+This method of training is meant primarily for debugging purposes. For optional connection and training speed, it's advised to upload your model to Bonsai.]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>12</Size>
