@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.2.202103191534" AlpVersion="8.7.0">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.4.202104291518" AlpVersion="8.7.2">
 <Model>
 	<Id>1208168597833</Id>
 	<Name><![CDATA[Activity Based Costing Analysis (Bonsai)]]></Name>
@@ -308,7 +308,7 @@
 				<Variable Class="Parameter">
 					<Id>1588008430360</Id>
 					<Name><![CDATA[bonsaiMode]]></Name>
-					<X>210</X><Y>-100</Y>
+					<X>320</X><Y>-100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -349,138 +349,6 @@
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>SEPARATE_SECTION</DelimeterType>
 							<StartSection><![CDATA[Bonsai parameters]]></StartSection>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1606784137636</Id>
-					<Name><![CDATA[playbackURL]]></Name>
-					<X>210</X><Y>-80</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA["https://<WEBAPP_NAME>.azurewebsites.net/v1/prediction"]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1606784137634</Id>
-							<Label><![CDATA[Exported brain address]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1588008430360</ParameterId>
-								<Operation>NOT_EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[1]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>SEPARATOR</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1606784147383</Id>
-					<Name><![CDATA[workspaceID]]></Name>
-					<X>320</X><Y>-80</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA["<YOUR_WORKSPACE_ID>"]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1606784147381</Id>
-							<Label><![CDATA[Workspace ID]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1588008430360</ParameterId>
-								<Operation>NOT_EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>SEPARATOR</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1606784157740</Id>
-					<Name><![CDATA[accessKey]]></Name>
-					<X>320</X><Y>-60</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA["<YOUR_ACCESS_KEY>"]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1606784157738</Id>
-							<Label><![CDATA[Access key]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1588008430360</ParameterId>
-								<Operation>NOT_EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1606784198501</Id>
-					<Name><![CDATA[simulatorName]]></Name>
-					<X>320</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA["Simulator"]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1606784198499</Id>
-							<Label><![CDATA[Simulator name]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1588008430360</ParameterId>
-								<Operation>NOT_EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
@@ -808,8 +676,8 @@
 				<Variable Class="Parameter">
 					<Id>1605111366738</Id>
 					<Name><![CDATA[sizeBufferQueues]]></Name>
-					<X>100</X><Y>-260</Y>
-					<Label><X>-50</X><Y>20</Y></Label>
+					<X>320</X><Y>-70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -7828,24 +7696,28 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>true</ShowLegend>
 					<DataItem>
+					<Id>1625859479979</Id>
 					<Expression><![CDATA[zidz(accumIdleCostA + accumIdleCostB, productCount)]]></Expression>
 					<Color>-989556</Color>
 					<Expression2Flag>false</Expression2Flag>
 						<Title><![CDATA[Idle]]></Title>
 					</DataItem>
 					<DataItem>
+					<Id>1625859479980</Id>
 					<Expression><![CDATA[zidz(accumWaitingCost, productCount)]]></Expression>
 					<Color>-360334</Color>
 					<Expression2Flag>false</Expression2Flag>
 						<Title><![CDATA[Waiting]]></Title>
 					</DataItem>
 					<DataItem>
+					<Id>1625859479981</Id>
 					<Expression><![CDATA[zidz(accumProcessCost, productCount)]]></Expression>
 					<Color>-6632142</Color>
 					<Expression2Flag>false</Expression2Flag>
 						<Title><![CDATA[Processing]]></Title>
 					</DataItem>
 					<DataItem>
+					<Id>1625859479982</Id>
 					<Expression><![CDATA[zidz(accumMoveCost, productCount)]]></Expression>
 					<Color>-7114536</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -7904,6 +7776,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479983</Id>
 					<Expression><![CDATA[zidz(accumWaitingCost, productCount)]]></Expression>
 					<Color>-360334</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -7963,6 +7836,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479984</Id>
 					<Expression><![CDATA[zidz(accumSeizeAQCost, productCount)]]></Expression>
 					<Color>-360334</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8022,6 +7896,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479985</Id>
 					<Expression><![CDATA[zidz(accumSeizeBQCost, productCount)]]></Expression>
 					<Color>-360334</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8081,6 +7956,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479986</Id>
 					<Expression><![CDATA[zidz(accumConveyorQCost, productCount)]]></Expression>
 					<Color>-360334</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8140,6 +8016,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479987</Id>
 					<Expression><![CDATA[zidz(accumProcessCost, productCount)]]></Expression>
 					<Color>-6632142</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8199,6 +8076,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479988</Id>
 					<Expression><![CDATA[zidz(accumMoveCost, productCount)]]></Expression>
 					<Color>-7114536</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8258,6 +8136,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479989</Id>
 					<Expression><![CDATA[zidz(accumIdleCostA, productCount)]]></Expression>
 					<Color>-989556</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8317,6 +8196,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479990</Id>
 					<Expression><![CDATA[zidz(accumIdleCostB, productCount)]]></Expression>
 					<Color>-989556</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8376,6 +8256,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479991</Id>
 					<Expression><![CDATA[zidz( resourceA.busy(),  resourceA.capacity )]]></Expression>
 					<Color>-10185235</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8435,6 +8316,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479992</Id>
 					<Expression><![CDATA[zidz( resourceB.busy(),  resourceB.capacity )]]></Expression>
 					<Color>-10185235</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8494,6 +8376,7 @@ STRUCTURE]]></Text>
 					</Labels>
 					<ShowLegend>false</ShowLegend>
 					<DataItem>
+					<Id>1625859479993</Id>
 					<Expression><![CDATA[zidz(accumIdleCostA + accumIdleCostB, productCount)]]></Expression>
 					<Color>-989556</Color>
 					<Expression2Flag>false</Expression2Flag>
@@ -8669,7 +8552,7 @@ STRUCTURE]]></Text>
 				<Rectangle>
 					<Id>1587397855299</Id>
 					<Name><![CDATA[rectangle3]]></Name>
-					<X>180</X><Y>-130</Y>
+					<X>290</X><Y>-130</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8682,7 +8565,7 @@ STRUCTURE]]></Text>
 					<LineColor>-65536</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DOTTED</LineStyle>
-					<Width>520</Width>
+					<Width>410</Width>
 					<Height>90</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor/>
@@ -9288,15 +9171,6 @@ return cost;  ]]></Body>
 				</InputReference>
     		</RunConfigurationInput>
     		<RunConfigurationInput>
-				<Id>1606843730678</Id>
-				<Name><![CDATA[Exported brain address]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[activity_based_costing_analysis_bonsai]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[playbackURL]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
 				<Id>1606797956378</Id>
 				<Name><![CDATA[Arrival rate]]></Name>
 				<InputReference>
@@ -9717,18 +9591,6 @@ the product cost.]]></Text>
 					<ParameterName><![CDATA[bonsaiMode]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[playbackURL]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[workspaceID]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[accessKey]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[simulatorName]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[IdleCostPerHourA]]></ParameterName>
 				</Parameter>
 				<Parameter>
@@ -10053,18 +9915,6 @@ Note: If your defined observation contains more fields than the brain was traine
 					<ParameterValue Class="CodeValue">
 						<Code><![CDATA[1]]></Code>
 					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[playbackURL]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[workspaceID]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[accessKey]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[simulatorName]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[BusyCostPerHourA]]></ParameterName>
@@ -10408,18 +10258,6 @@ This method of training is meant primarily for debugging purposes. For optional 
 					</ParameterValue>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[playbackURL]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[workspaceID]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[accessKey]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[simulatorName]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[BusyCostPerHourA]]></ParameterName>
 				</Parameter>
 				<Parameter>
@@ -10486,7 +10324,7 @@ This method of training is meant primarily for debugging purposes. For optional 
 		</SimulationExperiment>	
 		<!--   =========  Reinforcemenet Learning Experiment   ========  -->
 		<ReinforcementLearningExperiment ActiveObjectClassId="1208168597834">
-			<Id>0</Id>
+			<Id>1625859480089</Id>
 			<Name><![CDATA[RLExperiment]]></Name>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
