@@ -10319,7 +10319,7 @@ This method of training is meant primarily for debugging purposes. For optional 
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
 			<SeedValue>1</SeedValue>
 			<ModelTimeProperties>
-				<StopOption><![CDATA[Stop at specified time]]></StopOption>
+				<StopOption><![CDATA[Never]]></StopOption>
 				<InitialDate><![CDATA[1577865600000]]></InitialDate>	
 				<InitialTime><![CDATA[0.0]]></InitialTime>	
 				<FinalDate><![CDATA[1593504000000]]></FinalDate>	
@@ -10400,7 +10400,7 @@ ratioCostMoving = zidz(root.accumMoveCost, totalCost);
 
 exceededCapacityFlag = root.exceededCapacity ? 1 : 0;
 simTimeMonths = root.time(MONTH);]]></ObservationCode>
-			<StopCondition><![CDATA[root.exceededCapacity || root.time(MONTH) >= 6]]></StopCondition>
+			<StopCondition><![CDATA[false]]></StopCondition>
 			<ActionField>
 				<Name><![CDATA[numResourceA]]></Name>
 				<Type><![CDATA[int]]></Type>
@@ -10434,7 +10434,8 @@ root.resourceB.resetStats();]]></ActionCode>
 				<Name><![CDATA[sizeBufferQueues]]></Name>
 				<Type><![CDATA[int]]></Type>
 			</ConfigurationField>
-			<ConfigurationCode><![CDATA[root.ArrivalRate = arrivalRate;
+			<ConfigurationCode><![CDATA[root.bonsaiMode = 0; // training
+root.ArrivalRate = arrivalRate;
 root.sizeBufferQueues = sizeBufferQueues;]]></ConfigurationCode>
 		</ReinforcementLearningExperiment>
 	</Experiments>
