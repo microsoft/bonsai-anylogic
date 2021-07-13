@@ -1040,7 +1040,9 @@
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Action><![CDATA[RLExperiment.takeAction(this);]]></Action>
+					<Action><![CDATA[// The `takeAction` function takes any valid agent as an argument.
+// It's placed in this dedicated event to avoid conflict with other events.
+RLExperiment.takeAction(this);]]></Action>
 				</DynamicEventClass>
 			</DynamicEvents>
 			<Functions>
@@ -1123,7 +1125,6 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// This function schedules the triggers for bonsai to take actions in the model.
 
-
 /*
 Only execute when the 'bonsaiMode' parameter is in training mode (0);
 	in deactivated mode (-1), the model will execute as if without bonsai;
@@ -1134,6 +1135,7 @@ if (bonsaiMode != 0)
 
 // When using an unmanaged (locally hosted) sim, the first action is replaced with the configuration.
 // In this case, create an extra event at time 0.
+// This behavior may be changed in a future release.
 if (getEngine().getExperiment() instanceof ExperimentSimulation) {
 	create_RLEvent(0, DAY);
 }
@@ -1141,7 +1143,7 @@ if (getEngine().getExperiment() instanceof ExperimentSimulation) {
 // Schedule the first prediction at the model start.
 create_RLEvent(0, DAY);
 
-// Schedule an event at the end to evaluate the prediction before terminating the model.
+// Schedule an event at the end to evaluate the prediction.
 create_RLEvent(6, MONTH);]]></Body>
 				</Function>
 			</Functions>
