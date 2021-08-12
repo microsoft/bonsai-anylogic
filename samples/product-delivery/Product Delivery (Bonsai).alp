@@ -125,7 +125,7 @@
 				<Variable Class="PlainVariable">
 					<Id>1615241318759</Id>
 					<Name><![CDATA[windowStartIndex]]></Name>
-					<X>700</X><Y>550</Y>
+					<X>530</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -989,8 +989,8 @@ return calcDelay;]]></Body>
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588883292613</Id>
-					<Name><![CDATA[getTotalCostsPerProduct]]></Name>
-					<X>450</X><Y>500</Y>
+					<Name><![CDATA[getRollingTotalCostsPerProduct]]></Name>
+					<X>530</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1008,8 +1008,6 @@ if (sink.count() > 0) {
 		return costDelta;
 	}
 	return costDelta / productsDelta;
-	
-	//return (truckCosts + openCosts + productionCosts + incompleteOrderPenalty) / productsProcessed;
 }
 return main.costPerProductFallback;]]></Body>
 				</Function>
@@ -1017,8 +1015,8 @@ return main.costPerProductFallback;]]></Body>
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1588968965174</Id>
-					<Name><![CDATA[getMeanTurnaroundTime]]></Name>
-					<X>450</X><Y>450</Y>
+					<Name><![CDATA[getRollingMeanTurnaroundTime]]></Name>
+					<X>530</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1036,10 +1034,7 @@ if (sink.count() > 0) {
 	}
 	value /= (turnaroundDS.size()-windowStartIndex);
 	return value;
-	
-	//return orderComplete.distribution.mean();
 }
-
 return main.orderDurationFallback;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -1047,7 +1042,7 @@ return main.orderDurationFallback;]]></Body>
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1615238580454</Id>
 					<Name><![CDATA[getProductsQueueing]]></Name>
-					<X>450</X><Y>550</Y>
+					<X>530</X><Y>500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1062,7 +1057,7 @@ return a;]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1615241347870</Id>
 					<Name><![CDATA[updateStartIndex]]></Name>
-					<X>700</X><Y>530</Y>
+					<X>530</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1081,7 +1076,7 @@ windowStartIndex = limitMax(windowStartIndex, turnaroundDS.size()-1);]]></Body>
     			<DataSet>
 					<Id>1615239570985</Id>
 					<Name><![CDATA[turnaroundDS]]></Name>
-					<X>700</X><Y>440</Y>
+					<X>780</X><Y>440</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1103,7 +1098,7 @@ windowStartIndex = limitMax(windowStartIndex, turnaroundDS.size()-1);]]></Body>
     			<DataSet>
 					<Id>1615239593850</Id>
 					<Name><![CDATA[productsProcessedDS]]></Name>
-					<X>700</X><Y>470</Y>
+					<X>780</X><Y>470</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1125,7 +1120,7 @@ windowStartIndex = limitMax(windowStartIndex, turnaroundDS.size()-1);]]></Body>
     			<DataSet>
 					<Id>1615241139070</Id>
 					<Name><![CDATA[totalCostsDS]]></Name>
-					<X>700</X><Y>500</Y>
+					<X>780</X><Y>500</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1147,7 +1142,7 @@ windowStartIndex = limitMax(windowStartIndex, turnaroundDS.size()-1);]]></Body>
     			<DataSet>
 					<Id>1615683988040</Id>
 					<Name><![CDATA[ordersReceivedDS]]></Name>
-					<X>700</X><Y>650</Y>
+					<X>780</X><Y>530</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2494,14 +2489,6 @@ unit.setLocation(this);]]></Code>
 							<Name><![CDATA[onEnter]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[productsProcessed += agent.amount;
-/*
-traceln("[%5.1f] %4.1f, %5.0f, %9.1f = %5.1f, %5.1f", time(DAY), 
-	orderComplete.dataset.getY(orderComplete.dataset.size()-1),
-	productsProcessed,
-	truckCosts+openCosts+productionCosts+incompleteOrderPenalty,
-	getMeanTurnaroundTime(),
-	getTotalCostsPerProduct());
-*/
 turnaroundDS.add(orderComplete.dataset.getY(orderComplete.dataset.size()-1));
 productsProcessedDS.add(productsProcessed);
 totalCostsDS.add(truckCosts+openCosts+productionCosts+incompleteOrderPenalty);]]></Code>
@@ -3240,7 +3227,7 @@ main.waitingForProduct.add(value);]]></Code>
 				<Rectangle>
 					<Id>1588871578209</Id>
 					<Name><![CDATA[rectangle1]]></Name>
-					<X>420</X><Y>420</Y>
+					<X>500</X><Y>410</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3253,8 +3240,8 @@ main.waitingForProduct.add(value);]]></Code>
 					<LineColor>-65536</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DOTTED</LineStyle>
-					<Width>490</Width>
-					<Height>150</Height>
+					<Width>450</Width>
+					<Height>170</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor/>
 					<FillMaterial>null</FillMaterial>
@@ -4849,16 +4836,9 @@ dest.setText( order.distributor.name );]]></Action>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.text.SimpleDateFormat;
 import java.util.NoSuchElementException;]]></Import>
-			<StartupCode><![CDATA[
-plotOrderSizes.addDataSet(manufacturingCenters(0).ordersReceivedDS, 
-	"Chicago", gray, false, null, 1.0, plotOrderSizes.POINT_CIRCLE);
-plotOrderSizes.addDataSet(manufacturingCenters(1).ordersReceivedDS, 
-	"Pittsburg", purple, false, null, 1.0, plotOrderSizes.POINT_TRIANGLE);
-plotOrderSizes.addDataSet(manufacturingCenters(2).ordersReceivedDS, 
-	"Nashville", peru, false, null, 1.0, plotOrderSizes.POINT_SQUARE);
-]]></StartupCode>
-			<DestroyCode><![CDATA[update_costPerProductMean();
-update_orderDurationMean();]]></DestroyCode>
+			<StartupCode><![CDATA[setupCustomGraphs();]]></StartupCode>
+			<DestroyCode><![CDATA[update_rollingMeanCostPerProduct();
+update_rollingMeanDuration();]]></DestroyCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1589580427694</Id>
@@ -4955,8 +4935,8 @@ update_orderDurationMean();]]></DestroyCode>
 			<Outputs>
 				<Output>
 					<Id>1589580427831</Id>
-					<Name><![CDATA[orderDurationMean]]></Name>
-					<X>-250</X><Y>230</Y>
+					<Name><![CDATA[rollingMeanDuration]]></Name>
+					<X>-250</X><Y>300</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4964,10 +4944,12 @@ update_orderDurationMean();]]></DestroyCode>
 					<Type><![CDATA[double]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[manufacturingCenters.stream()
+						<Code><![CDATA[// Get rolling order duration average across all open MCs,
+//  or a large fallback value if they're all closed.
+manufacturingCenters.stream()
 	.filter(mfc -> mfc.is_open == 1)
 	.filter(mfc -> mfc.productsProcessed > 0)
-	.mapToDouble(mfc -> mfc.getMeanTurnaroundTime())
+	.mapToDouble(mfc -> mfc.getRollingMeanTurnaroundTime())
 	.average()
 	.orElse(orderDurationFallback)]]></Code>
 					</Value>
@@ -4980,8 +4962,8 @@ update_orderDurationMean();]]></DestroyCode>
 				</Output>
 				<Output>
 					<Id>1589580427833</Id>
-					<Name><![CDATA[costPerProductMean]]></Name>
-					<X>-250</X><Y>310</Y>
+					<Name><![CDATA[rollingMeanCostPerProduct]]></Name>
+					<X>-250</X><Y>350</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4989,10 +4971,12 @@ update_orderDurationMean();]]></DestroyCode>
 					<Type><![CDATA[double]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[manufacturingCenters.stream()
+						<Code><![CDATA[// Get rolling cost per product average across all open MCs,
+//  or a large fallback value if they're all closed.
+manufacturingCenters.stream()
 	.filter(mfc -> mfc.is_open == 1)
 	.filter(mfc -> mfc.productsProcessed > 0)
-	.mapToDouble(mfc -> mfc.getTotalCostsPerProduct())
+	.mapToDouble(mfc -> mfc.getRollingTotalCostsPerProduct())
 	.average()
 	.orElse(costPerProductFallback)]]></Code>
 					</Value>
@@ -5023,7 +5007,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1589748363089</Id>
 					<Name><![CDATA[lost_orders_qty]]></Name>
-					<X>-500</X><Y>300</Y>
+					<X>-500</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5035,7 +5019,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1589764825701</Id>
 					<Name><![CDATA[costPerProductFallback]]></Name>
-					<X>-220</X><Y>360</Y>
+					<X>-230</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5050,7 +5034,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1589764858365</Id>
 					<Name><![CDATA[orderDurationFallback]]></Name>
-					<X>-220</X><Y>280</Y>
+					<X>-230</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5065,7 +5049,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1628791408546</Id>
 					<Name><![CDATA[hourlyOpenCost]]></Name>
-					<X>-670</X><Y>410</Y>
+					<X>-670</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5080,7 +5064,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1628791414989</Id>
 					<Name><![CDATA[hourlyProductionCost]]></Name>
-					<X>-670</X><Y>440</Y>
+					<X>-670</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5095,7 +5079,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1628791416455</Id>
 					<Name><![CDATA[hourlyIncompleteOrderPenalty]]></Name>
-					<X>-670</X><Y>470</Y>
+					<X>-670</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5110,7 +5094,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="PlainVariable">
 					<Id>1628791417768</Id>
 					<Name><![CDATA[hourlyTruckCost]]></Name>
-					<X>-670</X><Y>500</Y>
+					<X>-670</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5125,7 +5109,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="Parameter">
 					<Id>1589580427823</Id>
 					<Name><![CDATA[bonsaiMode]]></Name>
-					<X>-680</X><Y>300</Y>
+					<X>-680</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5171,7 +5155,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="Parameter">
 					<Id>1615246292066</Id>
 					<Name><![CDATA[daysTilFirstStep]]></Name>
-					<X>-670</X><Y>600</Y>
+					<X>-410</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5204,7 +5188,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="Parameter">
 					<Id>1615238863914</Id>
 					<Name><![CDATA[daysBetweenSteps]]></Name>
-					<X>-670</X><Y>630</Y>
+					<X>-410</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5237,7 +5221,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Variable Class="Parameter">
 					<Id>1615239460757</Id>
 					<Name><![CDATA[daysRollingWindow]]></Name>
-					<X>-670</X><Y>660</Y>
+					<X>-410</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5264,7 +5248,7 @@ update_orderDurationMean();]]></DestroyCode>
 				<Event>
 					<Id>1589751786350</Id>
 					<Name><![CDATA[bonsaiStep]]></Name>
-					<X>-500</X><Y>250</Y>
+					<X>-500</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5291,8 +5275,8 @@ update_orderDurationMean();]]></DestroyCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[// Update the outputs
-update_orderDurationMean();
-update_costPerProductMean();
+update_rollingMeanDuration();
+update_rollingMeanCostPerProduct();
 
 if (bonsaiMode >= 0) { // training/playback
 	RLExperiment.takeAction(this);
@@ -5317,6 +5301,26 @@ if (bonsaiMode >= 0) { // training/playback
 					<Body><![CDATA[selectedViewArea = viewArea;
 viewArea.navigateTo();
 groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1628793945437</Id>
+					<Name><![CDATA[setupCustomGraphs]]></Name>
+					<X>-250</X><Y>450</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Add the datasets of each MC to the order size plot.
+// This is called after the MCs are initialized, on Main's "On startup" field.
+plotOrderSizes.addDataSet(manufacturingCenters(0).ordersReceivedDS, 
+	"Chicago", gray, false, null, 1.0, plotOrderSizes.POINT_CIRCLE);
+plotOrderSizes.addDataSet(manufacturingCenters(1).ordersReceivedDS, 
+	"Pittsburg", purple, false, null, 1.0, plotOrderSizes.POINT_TRIANGLE);
+plotOrderSizes.addDataSet(manufacturingCenters(2).ordersReceivedDS, 
+	"Nashville", peru, false, null, 1.0, plotOrderSizes.POINT_SQUARE);
+]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -5469,7 +5473,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 				<EmbeddedObject>
 					<Id>1606790842393</Id>
 					<Name><![CDATA[bonsaiConnector]]></Name>
-					<X>-680</X><Y>250</Y>
+					<X>-680</X><Y>300</Y>
 					<Label><X>-55</X><Y>-25</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6343,7 +6347,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 				<RoundedRectangle>
 					<Id>1589747291435</Id>
 					<Name><![CDATA[roundRectangle3]]></Name>
-					<X>-700</X><Y>380</Y>
+					<X>-700</X><Y>430</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6357,7 +6361,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
 					<Width>220</Width>
-					<Height>150</Height>
+					<Height>130</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -6366,7 +6370,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 				<Text>
 					<Id>1589747291437</Id>
 					<Name><![CDATA[text9]]></Name>
-					<X>-690</X><Y>365</Y>
+					<X>-690</X><Y>415</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6387,7 +6391,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 				<Polyline>
 					<Id>1589747478290</Id>
 					<Name><![CDATA[polyline]]></Name>
-					<X>-750</X><Y>190</Y>
+					<X>-750</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6408,8 +6412,8 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<FillMaterial>null</FillMaterial>
 					<Points>
 					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
-					   <Point><X>0</X><Y>510</Y><Z>0</Z></Point>
-					   <Point><X>690</X><Y>510</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>360</Y><Z>0</Z></Point>
+					   <Point><X>690</X><Y>360</Y><Z>0</Z></Point>
 					   <Point><X>690</X><Y>0</Y><Z>0</Z></Point>
 					</Points>
 					<Closed>true</Closed>
@@ -6436,7 +6440,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 				<RoundedRectangle>
 					<Id>1615238846882</Id>
 					<Name><![CDATA[roundRectangle5]]></Name>
-					<X>-700</X><Y>580</Y>
+					<X>-440</X><Y>430</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6449,7 +6453,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<LineColor>-12156236</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
-					<Width>200</Width>
+					<Width>160</Width>
 					<Height>100</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
@@ -6459,7 +6463,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 				<Text>
 					<Id>1615238853050</Id>
 					<Name><![CDATA[text12]]></Name>
-					<X>-700</X><Y>565</Y>
+					<X>-440</X><Y>415</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6713,7 +6717,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<Id>1628789485015</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-5952982</Color>
-					<Expression2><![CDATA[orderDurationMean]]></Expression2>
+					<Expression2><![CDATA[rollingMeanDuration]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>CIRCLE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -6779,7 +6783,7 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<Id>1628789485016</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-16744448</Color>
-					<Expression2><![CDATA[costPerProductMean]]></Expression2>
+					<Expression2><![CDATA[rollingMeanCostPerProduct]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>CIRCLE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -7082,6 +7086,27 @@ plot1.updateData();]]></ActionCode>
 						<Style>0</Style>
 					</Font>
 					<Alignment>CENTER</Alignment>
+				</Text>
+				<Text>
+					<Id>1628793754580</Id>
+					<Name><![CDATA[text10]]></Name>
+					<X>-750</X><Y>220</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-65536</Color>
+					<Text><![CDATA[Bonsai related objects]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>11</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
 				</Text>
 			</Presentation>
 
@@ -8817,16 +8842,16 @@ Chicago_products_queueing = root.manufacturingCenters(0).getProductsQueueing();
 Pittsburg_products_queueing = root.manufacturingCenters(1).getProductsQueueing();
 Nashville_products_queueing = root.manufacturingCenters(2).getProductsQueueing();
 
-Chicago_average_turnaround = root.manufacturingCenters(0).getMeanTurnaroundTime();
-Pittsburg_average_turnaround = root.manufacturingCenters(1).getMeanTurnaroundTime();
-Nashville_average_turnaround = root.manufacturingCenters(2).getMeanTurnaroundTime();
+Chicago_average_turnaround = root.manufacturingCenters(0).getRollingMeanTurnaroundTime();
+Pittsburg_average_turnaround = root.manufacturingCenters(1).getRollingMeanTurnaroundTime();
+Nashville_average_turnaround = root.manufacturingCenters(2).getRollingMeanTurnaroundTime();
 
-Chicago_cost_per_product = root.manufacturingCenters(0).getTotalCostsPerProduct();
-Pittsburg_cost_per_product = root.manufacturingCenters(1).getTotalCostsPerProduct();
-Nashville_cost_per_product = root.manufacturingCenters(2).getTotalCostsPerProduct();
+Chicago_cost_per_product = root.manufacturingCenters(0).getRollingTotalCostsPerProduct();
+Pittsburg_cost_per_product = root.manufacturingCenters(1).getRollingTotalCostsPerProduct();
+Nashville_cost_per_product = root.manufacturingCenters(2).getRollingTotalCostsPerProduct();
 
-overall_average_turnaround = root.orderDurationMean;
-overall_average_cost_per_product = root.costPerProductMean;
+overall_average_turnaround = root.rollingMeanDuration;
+overall_average_cost_per_product = root.rollingMeanCostPerProduct;
 
 time = root.time(HOUR);
 ]]></ObservationCode>
