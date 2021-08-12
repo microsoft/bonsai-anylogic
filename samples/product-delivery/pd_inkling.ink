@@ -120,136 +120,50 @@ type SimConfig {
 	RollingWindowSize_Days: number,
 }
 
-# Temporal reward for all MCs 
-function overall_reward_time(state: SimState) {
-    # Overall-level
-    # Return a harsh penalty if turnaround time is larger than 500
-    if state.overall_average_turnaround > 500 {
+function calc_turnaround_reward(turnaround: number) {
+	# Return a harsh penalty if turnaround time is larger than 500
+    if turnaround > 500 {
         return -40
     }
-    if state.overall_average_turnaround > 80 {
+    if turnaround > 80 {
         return -5
     }
-    var overall_average_turnaround_scaled = state.overall_average_turnaround / 80
-    return Math.E ** (-1 * overall_average_turnaround_scaled)
-}
-# Temporal reward for Chicago 
-function Chicago_reward_time(state: SimState) {
-    # MC-level
-    # Return a harsh penalty if turnaround time is larger than 500
-    if state.Chicago_average_turnaround > 500 {
-        return -40
-    }
-    if state.Chicago_average_turnaround > 80 {
-        return -5
-    }
-    var Chicago_average_turnaround_scaled = state.Chicago_average_turnaround / 80
-    return Math.E ** (-1 * Chicago_average_turnaround_scaled)
-}
-# Temporal reward for Pittsburg
-function Pittsburg_reward_time(state: SimState) {
-    # MC-level
-    if state.Pittsburg_average_turnaround > 500 {
-        return -40
-    }
-    if state.Pittsburg_average_turnaround > 80 {
-        return -5
-    }
-    var Pittsburg_average_turnaround_scaled = state.Pittsburg_average_turnaround / 80
-    return Math.E ** (-1 * Pittsburg_average_turnaround_scaled)
-}
-# Temporal reward for Nashville
-function Nashville_reward_time(state: SimState) {
-    # MC-level
-    if state.Nashville_average_turnaround > 500 {
-        return -40
-    }
-    if state.Nashville_average_turnaround > 80 {
-        return -5
-    }    
-    var Nashville_average_turnaround_scaled = state.Nashville_average_turnaround / 80
-    return Math.E ** (-1 * Nashville_average_turnaround_scaled)
+    var turnaround_scaled = turnaround / 80
+    return Math.E ** (-1 * turnaround_scaled)
 }
 
-# Truck utilization for Chicago
-function Chicago_reward_trUti(state: SimState) {
-    # MC-level 
-    if state.Chicago_util_trucks > 0 and state.Chicago_util_trucks <= 0.25 {
+function calc_utilization_reward(utilization: number) {
+    if utilization <= 0 {
+        return -1
+    } else if utilization <= 0.25 {
         return 0.2
-    }
-    if state.Chicago_util_trucks > 0.25 and state.Chicago_util_trucks <= 0.5 {
+    } else if utilization <= 0.5 {
         return 0.4
-    }
-    if state.Chicago_util_trucks > 0.5 and state.Chicago_util_trucks <= 0.75 {
+    } else if utilization <= 0.75 {
         return 0.6
-    }
-    if state.Chicago_util_trucks > 0.75 {
+    } else { # utilization > 0.75
         return 1
     }
-    return -1 # This corresponds to utilization of 0
-}
-# Truck utilization for Pittsburg
-function Pittsburg_reward_trUti(state: SimState) {
-    # MC-level
-    if state.Pittsburg_util_trucks > 0 and state.Pittsburg_util_trucks <= 0.25 {
-        return 0.2
-    }
-    if state.Pittsburg_util_trucks > 0.25 and state.Pittsburg_util_trucks <= 0.5 {
-        return 0.4
-    }
-    if state.Pittsburg_util_trucks > 0.5 and state.Pittsburg_util_trucks <= 0.75 {
-        return 0.6
-    }
-    if state.Pittsburg_util_trucks > 0.75 {
-        return 1
-    }
-    return -1 # This corresponds to utilization of 0
-}
-# Truck utilization for Nashville
-function Nashville_reward_trUti(state: SimState) {
-    # MC-level
-    if state.Nashville_util_trucks > 0 and state.Nashville_util_trucks <= 0.25 {
-        return 0.2
-    }
-    if state.Nashville_util_trucks > 0.25 and state.Nashville_util_trucks <= 0.5 {
-        return 0.4
-    }
-    if state.Nashville_util_trucks > 0.5 and state.Nashville_util_trucks <= 0.75 {
-        return 0.6
-    }
-    if state.Nashville_util_trucks > 0.75 {
-        return 1
-    }
-    return -1 # This corresponds to utilization of 0
 }
 
 function Reward(state: SimState) {
+    # Return a harsh penalty if all MCs are closed at the same time
+    if (state.Chicago_is_open + state.Pittsburg_is_open + state.Nashville_is_open == 0) {
+        return -40
+    }
 
-    var Nashville_temporal = Nashville_reward_time(state)
-    var Chicago_temporal = Chicago_reward_time(state)
-    var Pittsburg_temporal = Pittsburg_reward_time(state)
-    var all_temporal = overall_reward_time(state)
-    var Chicago_truck = Chicago_reward_trUti(state)
-    var Pittsburg_truck = Pittsburg_reward_trUti(state)
-    var Nashville_truck = Nashville_reward_trUti(state)
+    var OpenMCs_average_turnaround = calc_turnaround_reward(state.overall_average_turnaround)
+    var Chicago_truck = calc_utilization_reward(state.Chicago_util_trucks)
+    var Pittsburg_truck = calc_utilization_reward(state.Pittsburg_util_trucks)
+    var Nashville_truck = calc_utilization_reward(state.Nashville_util_trucks)
     
-	# Return a harsh penalty if all MCs are closed at the same time
-    if ( state.Chicago_is_open + state.Pittsburg_is_open + state.Nashville_is_open == 0 ) {
-		return -40
-    }
-    else {
-        var overall_temporal = all_temporal
-        var overall_truck = Chicago_truck + Pittsburg_truck + Nashville_truck
-        var overall_reward = overall_temporal + overall_truck
-        return overall_reward
-    }
+    return OpenMCs_average_turnaround + Chicago_truck + Pittsburg_truck + Nashville_truck
 }
 
 function Terminal(state: SimState) {
     if state.time >= 720 {
         return true
-    }
-    else if state.overall_average_cost_per_product > 100 {
+    } else if state.overall_average_cost_per_product > 100 {
         return true
     }
     return false
