@@ -544,7 +544,7 @@ slider.setValue(nVehicles);]]></OnChangeCode>
 					<Delay>false</Delay>
 				</Link>
 				<Link SourceId="1587343183754" TargetId="1412693008893" Polarity="null">
-					<Height>20.0</Height>
+					<Height>9.406</Height>
 					<PolarityPosition>0.95</PolarityPosition>
 					<Direction><X>230</X><Y>120</Y></Direction>
 					<Id>1588963646047</Id>
@@ -960,41 +960,6 @@ slider.setValue(nVehicles);]]></OnChangeCode>
 					</Points>
 				</Connector>
 			</Connectors>
-			<Events>
-				<Event>
-					<Id>1615241942651</Id>
-					<Name><![CDATA[printDebug]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>700</X><Y>380</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="cyclic">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1615276800000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[1.00001]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[traceln("[%5.1f] For %s: seen %s orders, %s products. Mean turnaround = %s, CPP = %s",
-	time(HOUR), name, sink.count(), productsProcessed, getMeanTurnaroundTime(), getTotalCostsPerProduct());]]></Action>
-				</Event>
-			</Events>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -1110,41 +1075,6 @@ while (windowStartIndex < turnaroundDS.size() && turnaroundDS.getX(windowStartIn
 }
 
 windowStartIndex = limitMax(windowStartIndex, turnaroundDS.size()-1);]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1615527243718</Id>
-					<Name><![CDATA[getCumuMeanTurnaroundTime]]></Name>
-					<X>450</X><Y>470</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// If at least 1 order completed, returns the actual mean turnaround time;
-// otherwise, returns a fallback value.
-if (sink.count() > 0) {
-	return orderComplete.distribution.mean();
-}
-
-return main.orderDurationFallback;]]></Body>
-				</Function>
-				<Function AccessType="public" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1615527263091</Id>
-					<Name><![CDATA[getCumuTotalCostsPerProduct]]></Name>
-					<X>450</X><Y>520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// if at least 1 order completed, returns the actual cost per product
-// otherwise, returns a fallback value
-if (sink.count() > 0) {
-	return (truckCosts + openCosts + productionCosts + incompleteOrderPenalty) / productsProcessed;
-}
-return main.costPerProductFallback;]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -4919,11 +4849,7 @@ dest.setText( order.distributor.name );]]></Action>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import java.text.SimpleDateFormat;
 import java.util.NoSuchElementException;]]></Import>
-			<StartupCode><![CDATA[// Update all MCs with initial configuration
-manufacturingCenters.forEach(m -> m.set_is_open(nameToOpen(m.name)));
-manufacturingCenters.forEach(m -> m.set_nVehicles(nameToNTrucks(m.name)));
-manufacturingCenters.forEach(m -> m.set_productionRate(nameToProductionRate(m.name)));
-
+			<StartupCode><![CDATA[
 plotOrderSizes.addDataSet(manufacturingCenters(0).ordersReceivedDS, 
 	"Chicago", gray, false, null, 1.0, plotOrderSizes.POINT_CIRCLE);
 plotOrderSizes.addDataSet(manufacturingCenters(1).ordersReceivedDS, 
@@ -4932,9 +4858,7 @@ plotOrderSizes.addDataSet(manufacturingCenters(2).ordersReceivedDS,
 	"Nashville", peru, false, null, 1.0, plotOrderSizes.POINT_SQUARE);
 ]]></StartupCode>
 			<DestroyCode><![CDATA[update_costPerProductMean();
-update_orderDurationMean();
-update_orderDurationMeanCumu();
-update_costPerProductMeanCumu();]]></DestroyCode>
+update_orderDurationMean();]]></DestroyCode>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1589580427694</Id>
@@ -5069,55 +4993,6 @@ update_costPerProductMeanCumu();]]></DestroyCode>
 	.filter(mfc -> mfc.is_open == 1)
 	.filter(mfc -> mfc.productsProcessed > 0)
 	.mapToDouble(mfc -> mfc.getTotalCostsPerProduct())
-	.average()
-	.orElse(costPerProductFallback)]]></Code>
-					</Value>
-					<ComputationMoment>MANUALLY</ComputationMoment>
-					<ComputationTimeCode Class="CodeUnitValue">
-						<Code><![CDATA[]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-					</ComputationTimeCode>
-					<ComputationDate>1588838400000</ComputationDate>
-				</Output>
-				<Output>
-					<Id>1615527326719</Id>
-					<Name><![CDATA[orderDurationMeanCumu]]></Name>
-					<X>-250</X><Y>260</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Type><![CDATA[double]]></Type>
-					<UnitType><![CDATA[NONE]]></UnitType>
-					<Value Class="CodeValue">
-						<Code><![CDATA[manufacturingCenters.stream()
-	.filter(mfc -> mfc.is_open == 1)
-	.filter(mfc -> mfc.productsProcessed > 0)
-	.mapToDouble(mfc -> mfc.getCumuMeanTurnaroundTime())
-	.average()
-	.orElse(orderDurationFallback)]]></Code>
-					</Value>
-					<ComputationMoment>MANUALLY</ComputationMoment>
-					<ComputationTimeCode Class="CodeUnitValue">
-						<Code><![CDATA[]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
-					</ComputationTimeCode>
-					<ComputationDate>1588838400000</ComputationDate>
-				</Output>
-				<Output>
-					<Id>1615527328711</Id>
-					<Name><![CDATA[costPerProductMeanCumu]]></Name>
-					<X>-250</X><Y>340</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Type><![CDATA[double]]></Type>
-					<UnitType><![CDATA[NONE]]></UnitType>
-					<Value Class="CodeValue">
-						<Code><![CDATA[manufacturingCenters.stream()
-	.filter(mfc -> mfc.productsProcessed > 0)
-	.mapToDouble(mfc -> mfc.getCumuTotalCostsPerProduct())
 	.average()
 	.orElse(costPerProductFallback)]]></Code>
 					</Value>
@@ -5309,323 +5184,6 @@ update_costPerProductMeanCumu();]]></DestroyCode>
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1589580427784</Id>
-					<Name><![CDATA[chicagoOpen]]></Name>
-					<X>-450</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[1]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427782</Id>
-							<Label><![CDATA[Is Chicago center open]]></Label>
-							<EditorContolType>RADIO_BUTTONS</EditorContolType>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[Yes]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[1]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[No]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</PredefParamValue>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>SEPARATE_SECTION</DelimeterType>
-							<StartSection><![CDATA[State of manufacturing centers]]></StartSection>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427787</Id>
-					<Name><![CDATA[chicagoNTrucks]]></Name>
-					<X>-350</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427785</Id>
-							<Label><![CDATA[Fleet size at Chicago center]]></Label>
-							<EditorContolType>SLIDER</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1589580427784</ParameterId>
-								<Operation>EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[1]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[3]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427790</Id>
-					<Name><![CDATA[chicagoProductionRate]]></Name>
-					<X>-240</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<UnitOfValue Class="RateUnits"><![CDATA[PER_HOUR]]></UnitOfValue>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[65]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427788</Id>
-							<Label><![CDATA[Production rate at Chicago center]]></Label>
-							<EditorContolType>SLIDER</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1589580427784</ParameterId>
-								<Operation>EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[50]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[80]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427793</Id>
-					<Name><![CDATA[pittsburgOpen]]></Name>
-					<X>-450</X><Y>480</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[1]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427791</Id>
-							<Label><![CDATA[Is Pittsburg center open]]></Label>
-							<EditorContolType>RADIO_BUTTONS</EditorContolType>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[Yes]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[1]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[No]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</PredefParamValue>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427796</Id>
-					<Name><![CDATA[pittsburgNTrucks]]></Name>
-					<X>-350</X><Y>480</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427794</Id>
-							<Label><![CDATA[Fleet size at Pittsburg center]]></Label>
-							<EditorContolType>SLIDER</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1589580427793</ParameterId>
-								<Operation>EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[1]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[3]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427799</Id>
-					<Name><![CDATA[pittsburgProductionRate]]></Name>
-					<X>-240</X><Y>480</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[65]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427797</Id>
-							<Label><![CDATA[Production rate at Pittsburg center]]></Label>
-							<EditorContolType>SLIDER</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1589580427793</ParameterId>
-								<Operation>EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[50]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[80]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427802</Id>
-					<Name><![CDATA[nashvilleOpen]]></Name>
-					<X>-450</X><Y>520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[1]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427800</Id>
-							<Label><![CDATA[Is Nashville center open]]></Label>
-							<EditorContolType>RADIO_BUTTONS</EditorContolType>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[Yes]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[1]]></Code>
-								</Value>
-							</PredefParamValue>
-							<PredefParamValue>
-								<Id>0</Id>
-								<Name><![CDATA[No]]></Name>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</PredefParamValue>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427805</Id>
-					<Name><![CDATA[nashvilleNTrucks]]></Name>
-					<X>-350</X><Y>520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427803</Id>
-							<Label><![CDATA[Fleet size at Nashville center]]></Label>
-							<EditorContolType>SLIDER</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1589580427802</ParameterId>
-								<Operation>EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[1]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[3]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427808</Id>
-					<Name><![CDATA[nashvilleProductionRate]]></Name>
-					<X>-240</X><Y>520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[65]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427806</Id>
-							<Label><![CDATA[Production rate at Nashville center]]></Label>
-							<EditorContolType>SLIDER</EditorContolType>
-							<HideCondition>
-								<Id>0</Id>
-								<ParameterId>1589580427802</ParameterId>
-								<Operation>EQUALS</Operation>
-								<Value Class="CodeValue">
-									<Code><![CDATA[0]]></Code>
-								</Value>
-							</HideCondition>
-							<MinSliderValue><![CDATA[50]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[80]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1589580427814</Id>
 					<Name><![CDATA[hourlyOpenCost]]></Name>
 					<X>-680</X><Y>400</Y>
@@ -5761,14 +5319,6 @@ update_costPerProductMeanCumu();]]></DestroyCode>
 update_orderDurationMean();
 update_costPerProductMean();
 
-update_orderDurationMeanCumu();
-update_costPerProductMeanCumu();
-/*
-if (costPerProductMean != costPerProductFallback)
-	maxCPP = max(maxCPP, costPerProductMean);
-if (costPerProductMeanCumu != costPerProductFallback)
-	maxCPP = max(maxCPP, costPerProductMeanCumu);
-*/
 if (bonsaiMode >= 0) { // training/playback
 	RLExperiment.takeAction(this);
 }]]></Action>
@@ -5792,93 +5342,6 @@ if (bonsaiMode >= 0) { // training/playback
 					<Body><![CDATA[selectedViewArea = viewArea;
 viewArea.navigateTo();
 groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[int]]></ReturnType>
-					<Id>1589580427708</Id>
-					<Name><![CDATA[nameToOpen]]></Name>
-					<X>-450</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[name]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Get the parameter for initial open state based on given city name
-int isOpen = 1; // default (open)
-switch (name) {
-	case "Chicago":
-		isOpen = chicagoOpen;
-		break;
-	case "Pittsburg":
-		isOpen = pittsburgOpen;
-		break;
-	case "Nashville":
-		isOpen = nashvilleOpen;
-		break;
-}
-return isOpen;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[int]]></ReturnType>
-					<Id>1589580427710</Id>
-					<Name><![CDATA[nameToNTrucks]]></Name>
-					<X>-350</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[name]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Get the parameter for initial number of trucks based on given city name
-int nTrucks = 1; // default
-switch (name) {
-	case "Chicago":
-		nTrucks = chicagoNTrucks;
-		break;
-	case "Pittsburg":
-		nTrucks = pittsburgNTrucks;
-		break;
-	case "Nashville":
-		nTrucks = nashvilleNTrucks;
-		break;
-}
-return nTrucks;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1589580427712</Id>
-					<Name><![CDATA[nameToProductionRate]]></Name>
-					<X>-240</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[name]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Body><![CDATA[// Get the parameter for initial production rate based on given city name
-double prodRate = 50; // default
-switch (name) {
-	case "Chicago":
-		prodRate = chicagoProductionRate;
-		break;
-	case "Pittsburg":
-		prodRate = pittsburgProductionRate;
-		break;
-	case "Nashville":
-		prodRate = nashvilleProductionRate;
-		break;
-}
-return prodRate;]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -5913,52 +5376,6 @@ return prodRate;]]></Body>
 					<HighPercent>10</HighPercent>
 					<Title><![CDATA[]]></Title>
 				</HistogramData>
-    			<DataSet>
-					<Id>1615567842906</Id>
-					<Name><![CDATA[rollingCostPerProductDS]]></Name>
-					<X>-700</X><Y>780</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>true</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1615622400000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[daysTilFirstStep+0.000001]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[daysBetweenSteps]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>true</FreezeXAxis>
-					<VerticalAxisExpression><![CDATA[costPerProductMean]]></VerticalAxisExpression>
-					<SamplesToKeep>500</SamplesToKeep>
-				</DataSet>
-    			<DataSet>
-					<Id>1615567903737</Id>
-					<Name><![CDATA[rollingMeanDurationDS]]></Name>
-					<X>-700</X><Y>750</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<AutoUpdate>true</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1615622400000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[daysTilFirstStep+0.000001]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[daysBetweenSteps]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[DAY]]></Unit>
-					</RecurrenceCode>
-					<FreezeXAxis>true</FreezeXAxis>
-					<VerticalAxisExpression><![CDATA[orderDurationMean]]></VerticalAxisExpression>
-					<SamplesToKeep>500</SamplesToKeep>
-				</DataSet>
 			</AnalysisData>
 			<AgentLinks>
 				<AgentLink>
@@ -6992,50 +6409,6 @@ return prodRate;]]></Body>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
-				<RoundedRectangle>
-					<Id>1589747311930</Id>
-					<Name><![CDATA[roundRectangle4]]></Name>
-					<X>-470</X><Y>380</Y>
-					<Label><X>10</X><Y>10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-12156236</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>DASHED</LineStyle>
-					<Width>380</Width>
-					<Height>170</Height>
-					<Rotation>0.0</Rotation>
-					<FillColor>-1</FillColor>
-					<FillMaterial>null</FillMaterial>
-					<ArcRadius>10</ArcRadius>
-				</RoundedRectangle>
-				<Text>
-					<Id>1589747311932</Id>
-					<Name><![CDATA[text10]]></Name>
-					<X>-460</X><Y>365</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-9404272</Color>
-					<Text><![CDATA[State]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>11</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Polyline>
 					<Id>1589747478290</Id>
 					<Name><![CDATA[polyline]]></Name>
@@ -7964,33 +7337,6 @@ plot1.updateData();]]></ActionCode>
 					<ParameterName><![CDATA[daysRollingWindow]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[chicagoOpen]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoNTrucks]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoProductionRate]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgOpen]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgNTrucks]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgProductionRate]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleOpen]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleNTrucks]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleProductionRate]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[hourlyOpenCost]]></ParameterName>
 				</Parameter>
 				<Parameter>
@@ -8117,33 +7463,6 @@ plot1.updateData();]]></ActionCode>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[daysRollingWindow]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoOpen]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoNTrucks]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoProductionRate]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgOpen]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgNTrucks]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgProductionRate]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleOpen]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleNTrucks]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleProductionRate]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[hourlyOpenCost]]></ParameterName>
@@ -9199,60 +8518,6 @@ Trucks move on real roads, and routes are created when vehicles start moving to 
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[daysRollingWindow]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoOpen]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_chicagoOpen]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoNTrucks]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_chicagoNTrucks]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[chicagoProductionRate]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_chicagoProductionRate]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgOpen]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_pittsburgOpen]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgNTrucks]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_pittsburgNTrucks]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[pittsburgProductionRate]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_pittsburgProductionRate]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleOpen]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_nashvilleOpen]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleNTrucks]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_nashvilleNTrucks]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[nashvilleProductionRate]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_nashvilleProductionRate]]></Code>
-					</ParameterValue>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[hourlyOpenCost]]></ParameterName>
