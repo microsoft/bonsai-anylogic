@@ -115,15 +115,9 @@ type SimAction {
 }
 
 type SimConfig {
-    OpenCost_PerHour: number,
-	ProductionCost_PerHour: number,
-    IncompleteOrderPenalty_PerHour: number,
-    TruckCost_PerHour: number,
-    
 	FirstActionTime_Days: number,
 	RecurrenceActionTime_Days: number,
 	RollingWindowSize_Days: number,
-
 }
 
 # Temporal reward for all MCs 
@@ -278,10 +272,6 @@ graph (input: ObservableState): SimAction {
 
             lesson default {
                 scenario {
-                    OpenCost_PerHour: 200,
-                    ProductionCost_PerHour: 65,
-                    IncompleteOrderPenalty_PerHour: 5,
-                    TruckCost_PerHour: 15,
 					FirstActionTime_Days: 4,
 					RecurrenceActionTime_Days: 3,
 					RollingWindowSize_Days: 3,
