@@ -5062,6 +5062,66 @@ update_orderDurationMean();]]></DestroyCode>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1628791408546</Id>
+					<Name><![CDATA[hourlyOpenCost]]></Name>
+					<X>-670</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[200]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1628791414989</Id>
+					<Name><![CDATA[hourlyProductionCost]]></Name>
+					<X>-670</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[65]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1628791416455</Id>
+					<Name><![CDATA[hourlyIncompleteOrderPenalty]]></Name>
+					<X>-670</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[5]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1628791417768</Id>
+					<Name><![CDATA[hourlyTruckCost]]></Name>
+					<X>-670</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="true" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[15]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1589580427823</Id>
 					<Name><![CDATA[bonsaiMode]]></Name>
@@ -5176,107 +5236,6 @@ update_orderDurationMean();]]></DestroyCode>
 						<ParameterEditor>
 							<Id>1615239460755</Id>
 							<Label><![CDATA[Time of rolling average window]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427814</Id>
-					<Name><![CDATA[hourlyOpenCost]]></Name>
-					<X>-680</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[200]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427812</Id>
-							<Label><![CDATA[Being open, $/hr]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>SEPARATE_SECTION</DelimeterType>
-							<StartSection><![CDATA[Hourly costs]]></StartSection>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427820</Id>
-					<Name><![CDATA[hourlyProductionCost]]></Name>
-					<X>-680</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[65]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427818</Id>
-							<Label><![CDATA[Production, $/hr]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427817</Id>
-					<Name><![CDATA[hourlyIncompleteOrderPenalty]]></Name>
-					<X>-680</X><Y>480</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[5]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427815</Id>
-							<Label><![CDATA[Incomplete (queueing) orders, $/hr]]></Label>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1589580427811</Id>
-					<Name><![CDATA[hourlyTruckCost]]></Name>
-					<X>-680</X><Y>520</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[15]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1589580427809</Id>
-							<Label><![CDATA[Trucks, $/hr]]></Label>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -6381,8 +6340,8 @@ groupMainMenu.setPos( viewArea.getX(), viewArea.getY() );]]></Body>
 					<LineColor>-12156236</LineColor>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>DASHED</LineStyle>
-					<Width>200</Width>
-					<Height>170</Height>
+					<Width>220</Width>
+					<Height>150</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -7336,18 +7295,6 @@ plot1.updateData();]]></ActionCode>
 				<Parameter>
 					<ParameterName><![CDATA[daysRollingWindow]]></ParameterName>
 				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyOpenCost]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyProductionCost]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyIncompleteOrderPenalty]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyTruckCost]]></ParameterName>
-				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -7463,18 +7410,6 @@ plot1.updateData();]]></ActionCode>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[daysRollingWindow]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyOpenCost]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyProductionCost]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyIncompleteOrderPenalty]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyTruckCost]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
@@ -7683,66 +7618,6 @@ plot1.updateData();]]></ActionCode>
 						</InitialValue>
 					</Properties>
 				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1000000000031</Id>
-					<Name><![CDATA[v_hourlyOpenCost]]></Name>
-					<X>-200</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[200]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1000000000034</Id>
-					<Name><![CDATA[v_hourlyProductionCost]]></Name>
-					<X>-200</X><Y>380</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[65]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1000000000037</Id>
-					<Name><![CDATA[v_hourlyIncompleteOrderPenalty]]></Name>
-					<X>-200</X><Y>410</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[5]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1000000000040</Id>
-					<Name><![CDATA[v_hourlyTruckCost]]></Name>
-					<X>-200</X><Y>440</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[15]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
 			</Variables>
 
 			<Presentation>
@@ -7754,6 +7629,7 @@ plot1.updateData();]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -7776,6 +7652,7 @@ plot1.updateData();]]></ActionCode>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
+					<Lock>true</Lock>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -7972,90 +7849,6 @@ plot1.updateData();]]></ActionCode>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Production rate at Nashville center]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>11</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1000000000033</Id>
-					<Name><![CDATA[t_v_hourlyOpenCost]]></Name>
-					<X>668.5</X><Y>369</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Being open, $/hr]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>11</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1000000000036</Id>
-					<Name><![CDATA[t_v_hourlyProductionCost]]></Name>
-					<X>668.5</X><Y>419</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Production, $/hr]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>11</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1000000000039</Id>
-					<Name><![CDATA[t_v_hourlyIncompleteOrderPenalty]]></Name>
-					<X>668.5</X><Y>469</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Incomplete (queueing) orders, $/hr]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>11</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1000000000042</Id>
-					<Name><![CDATA[t_v_hourlyTruckCost]]></Name>
-					<X>668.5</X><Y>519</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Trucks, $/hr]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>11</Size>
@@ -8344,94 +8137,6 @@ Trucks move on real roads, and routes are created when vehicles start moving to 
 						<Link>v_nashvilleProductionRate</Link>
 					</ExtendedProperties>
 				</Control>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1000000000032</Id>
-					<Name><![CDATA[c_hourlyOpenCost]]></Name>
-					<X>678.5</X><Y>359</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>v_hourlyOpenCost</Link>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1000000000035</Id>
-					<Name><![CDATA[c_hourlyProductionCost]]></Name>
-					<X>678.5</X><Y>409</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>v_hourlyProductionCost</Link>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1000000000038</Id>
-					<Name><![CDATA[c_hourlyIncompleteOrderPenalty]]></Name>
-					<X>678.5</X><Y>459</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>v_hourlyIncompleteOrderPenalty</Link>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="EditBox">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1000000000041</Id>
-					<Name><![CDATA[c_hourlyTruckCost]]></Name>
-					<X>678.5</X><Y>509</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<FillColor/>
-						<TextColor/>
-						<Enabled>true</Enabled>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LinkTo>true</LinkTo>
-						<Link>v_hourlyTruckCost</Link>
-					</ExtendedProperties>
-				</Control>
 				<Control Type="CheckBox">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1614369103211</Id>
@@ -8518,30 +8223,6 @@ Trucks move on real roads, and routes are created when vehicles start moving to 
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[daysRollingWindow]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyOpenCost]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_hourlyOpenCost]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyProductionCost]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_hourlyProductionCost]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyIncompleteOrderPenalty]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_hourlyIncompleteOrderPenalty]]></Code>
-					</ParameterValue>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[hourlyTruckCost]]></ParameterName>
-					<ParameterValue Class="CodeValue">
-						<Code><![CDATA[v_hourlyTruckCost]]></Code>
-					</ParameterValue>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
@@ -8774,22 +8455,6 @@ root.manufacturingCenters(0).fleet.resetStats();
 root.manufacturingCenters(1).fleet.resetStats();
 root.manufacturingCenters(2).fleet.resetStats();]]></ActionCode>
 			<ConfigurationField>
-				<Name><![CDATA[OpenCost_PerHour]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ConfigurationField>
-			<ConfigurationField>
-				<Name><![CDATA[ProductionCost_PerHour]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ConfigurationField>
-			<ConfigurationField>
-				<Name><![CDATA[IncompleteOrderPenalty_PerHour]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ConfigurationField>
-			<ConfigurationField>
-				<Name><![CDATA[TruckCost_PerHour]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ConfigurationField>
-			<ConfigurationField>
 				<Name><![CDATA[FirstActionTime_Days]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ConfigurationField>
@@ -8801,12 +8466,7 @@ root.manufacturingCenters(2).fleet.resetStats();]]></ActionCode>
 				<Name><![CDATA[RollingWindowSize_Days]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ConfigurationField>
-			<ConfigurationCode><![CDATA[root.hourlyOpenCost = OpenCost_PerHour;
-root.hourlyProductionCost = ProductionCost_PerHour;
-root.hourlyIncompleteOrderPenalty = IncompleteOrderPenalty_PerHour;
-root.hourlyTruckCost = TruckCost_PerHour;
-
-root.daysTilFirstStep = FirstActionTime_Days;
+			<ConfigurationCode><![CDATA[root.daysTilFirstStep = FirstActionTime_Days;
 root.daysBetweenSteps = RecurrenceActionTime_Days;
 root.daysRollingWindow = RollingWindowSize_Days;
 ]]></ConfigurationCode>
