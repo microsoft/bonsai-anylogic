@@ -332,6 +332,9 @@
 						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[uniform_discr(1, 3)]]></Code>
+						</DefaultValue>
 						<OnChangeCode><![CDATA[fleet.set_capacity(nVehicles);
 slider.setValue(nVehicles);]]></OnChangeCode>
 						<ParameterEditor>
@@ -357,7 +360,7 @@ slider.setValue(nVehicles);]]></OnChangeCode>
 						<UnitOfValue Class="RateUnits"><![CDATA[PER_HOUR]]></UnitOfValue>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeUnitValue">
-							<Code><![CDATA[]]></Code>
+							<Code><![CDATA[uniform(50, 80)]]></Code>
 							<Unit Class="RateUnits"><![CDATA[PER_HOUR]]></Unit>
 						</DefaultValue>
 						<OnChangeCode><![CDATA[slider1.setValue(productionRate)]]></OnChangeCode>
