@@ -7,7 +7,7 @@
 <AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.2.202012241846" AlpVersion="8.7.0">
 <Model>
 	<Id>1406111021221</Id>
-	<Name><![CDATA[Product Delivery (Bonsai) - Testing]]></Name>
+	<Name><![CDATA[Product Delivery (Bonsai)]]></Name>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[product_delivery_bonsai]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Hour]]></ModelTimeUnit>
