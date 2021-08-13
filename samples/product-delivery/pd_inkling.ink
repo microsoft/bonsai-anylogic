@@ -8,25 +8,25 @@ using Math
 
 #what the simulator sends
 type SimState {
-    # Whether MC was open or not in last iteration
-    Chicago_is_open: number<0, 1, >,
-    Pittsburg_is_open: number<0, 1, >,
-    Nashville_is_open: number<0, 1, >,
+    # Whether MC was accepting or not in last iteration
+    Chicago_is_accepting: number<0, 1, >,
+    Pittsburg_is_accepting: number<0, 1, >,
+    Nashville_is_accepting: number<0, 1, >,
 
-    # The truck utilization percentage at each MC
-    # Out of trucks allocated to each MC, how much the trucks were used?
-    Chicago_util_trucks: number<0 .. 1>,
-    Pittsburg_util_trucks: number<0 .. 1>,
-    Nashville_util_trucks: number<0 .. 1>,
+    # The vehicle utilization percentage at each MC
+    # Out of vehicles allocated to each MC, how much the vehicles were used?
+    Chicago_util_vehicles: number<0 .. 1>,
+    Pittsburg_util_vehicles: number<0 .. 1>,
+    Nashville_util_vehicles: number<0 .. 1>,
 
-    # Number of trucks offered to each MC in last iteration- it can use the truck or not
-    Chicago_num_trucks: number<1 .. 3 step 1>,
-    Pittsburg_num_trucks: number<1 .. 3 step 1>,
-    Nashville_num_trucks: number<1 .. 3 step 1>,
+    # Number of vehicles offered to each MC in last iteration- it can use the vehicle or not
+    Chicago_num_vehicles: number<1 .. 3 step 1>,
+    Pittsburg_num_vehicles: number<1 .. 3 step 1>,
+    Nashville_num_vehicles: number<1 .. 3 step 1>,
 
     # The inventory level at each MC impacted by the production rate
     # The goal is to accumulate enough, but not to accumulate too much
-    # If you have too much in stock and not enough trucks, you have to wait until trucks are available
+    # If you have too much in stock and not enough vehicles, you have to wait until vehicles are available
     Chicago_inventory_level: number,
     Pittsburg_inventory_level: number,
     Nashville_inventory_level: number,
@@ -60,17 +60,17 @@ type SimState {
 
 #what the brain sees during training
 type ObservableState {
-    Chicago_is_open: number<0, 1, >,
-    Pittsburg_is_open: number<0, 1, >,
-    Nashville_is_open: number<0, 1, >,
+    Chicago_is_accepting: number<0, 1, >,
+    Pittsburg_is_accepting: number<0, 1, >,
+    Nashville_is_accepting: number<0, 1, >,
 
-    Chicago_util_trucks: number<0 .. 1>,
-    Pittsburg_util_trucks: number<0 .. 1>,
-    Nashville_util_trucks: number<0 .. 1>,
+    Chicago_util_vehicles: number<0 .. 1>,
+    Pittsburg_util_vehicles: number<0 .. 1>,
+    Nashville_util_vehicles: number<0 .. 1>,
 
-    Chicago_num_trucks: number<1 .. 3 step 1>,
-    Pittsburg_num_trucks: number<1 .. 3 step 1>,
-    Nashville_num_trucks: number<1 .. 3 step 1>,
+    Chicago_num_vehicles: number<1 .. 3 step 1>,
+    Pittsburg_num_vehicles: number<1 .. 3 step 1>,
+    Nashville_num_vehicles: number<1 .. 3 step 1>,
 
     Chicago_inventory_level: number,
     Pittsburg_inventory_level: number,
@@ -96,15 +96,15 @@ type ObservableState {
 }
 
 type SimAction {
-    # Whether to keep each MC closed or open
-	Chicago_is_open: number<0, 1, >,
-	Pittsburg_is_open: number<0, 1, >,
-	Nashville_is_open: number<0, 1, >,
+    # Whether to keep each MC closed or accepting
+	Chicago_is_accepting: number<0, 1, >,
+	Pittsburg_is_accepting: number<0, 1, >,
+	Nashville_is_accepting: number<0, 1, >,
     
-    # Number of trucks to allocate to each MC at each iteration
-	Chicago_num_trucks: number<1..3 step 1>,
-	Pittsburg_num_trucks: number<1..3 step 1>,
-	Nashville_num_trucks: number<1..3 step 1>,
+    # Number of vehicles to allocate to each MC at each iteration
+	Chicago_num_vehicles: number<1..3 step 1>,
+	Pittsburg_num_vehicles: number<1..3 step 1>,
+	Nashville_num_vehicles: number<1..3 step 1>,
     
     # Production rate at each MC at each iteration
 	Chicago_production_rate: number<50..80>,
@@ -146,16 +146,16 @@ function calc_utilization_reward(utilization: number) {
 
 function Reward(state: SimState) {
     # Return a harsh penalty if all MCs are closed at the same time
-    if (state.Chicago_is_open + state.Pittsburg_is_open + state.Nashville_is_open == 0) {
+    if (state.Chicago_is_accepting + state.Pittsburg_is_accepting + state.Nashville_is_accepting == 0) {
         return -40
     }
 	
     var OpenMCs_average_turnaround = calc_turnaround_reward(state.overall_average_turnaround)
-    var Chicago_truck = calc_utilization_reward(state.Chicago_util_trucks)
-    var Pittsburg_truck = calc_utilization_reward(state.Pittsburg_util_trucks)
-    var Nashville_truck = calc_utilization_reward(state.Nashville_util_trucks)
+    var Chicago_vehicle = calc_utilization_reward(state.Chicago_util_vehicles)
+    var Pittsburg_vehicle = calc_utilization_reward(state.Pittsburg_util_vehicles)
+    var Nashville_vehicle = calc_utilization_reward(state.Nashville_util_vehicles)
     
-    return OpenMCs_average_turnaround + Chicago_truck + Pittsburg_truck + Nashville_truck
+    return OpenMCs_average_turnaround + Chicago_vehicle + Pittsburg_vehicle + Nashville_vehicle
 }
 
 function Terminal(state: SimState) {
