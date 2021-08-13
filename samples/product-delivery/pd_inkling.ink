@@ -21,7 +21,7 @@ type SimState {
     # Number of vehicles in use at each MC in last iteration
     num_vehicles: number<1 .. 3 step 1>[3],
 
-    # The hourly rate of new products added to each MC's inventory in the last iteration
+    # The hourly rate that new products are added to each MC's inventory in the last iteration
     production_rates: number<50 .. 80>[3],
 
     # The average utilization percentage of each vehicle at each MC

@@ -3360,6 +3360,7 @@ main.waitingForProduct.add(value);]]></Code>
 						<Orientation>VERTICAL</Orientation>
 						<MinValue><![CDATA[1]]></MinValue>
 						<MaxValue><![CDATA[3]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
 						<LinkTo>true</LinkTo>
 						<Link>nVehicles</Link>
 					</ExtendedProperties>
@@ -3382,8 +3383,7 @@ main.waitingForProduct.add(value);]]></Code>
 						<DefaultValueCode><![CDATA[nVehicles]]></DefaultValueCode>
 						<Orientation>VERTICAL</Orientation>
 						<MinValue><![CDATA[50]]></MinValue>
-						<MaxValue><![CDATA[85]]></MaxValue>
-						<Step><![CDATA[1]]></Step>
+						<MaxValue><![CDATA[80]]></MaxValue>
 						<LinkTo>true</LinkTo>
 						<Link>productionRate</Link>
 					</ExtendedProperties>
