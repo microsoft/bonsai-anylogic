@@ -20,9 +20,9 @@ type SimState {
     Nashville_util_trucks: number<0 .. 1>,
 
     # Number of trucks offered to each MC in last iteration- it can use the truck or not
-    Chicago_num_trucks: number<1 .. 3>,
-    Pittsburg_num_trucks: number<1 .. 3>,
-    Nashville_num_trucks: number<1 .. 3>,
+    Chicago_num_trucks: number<1 .. 3 step 1>,
+    Pittsburg_num_trucks: number<1 .. 3 step 1>,
+    Nashville_num_trucks: number<1 .. 3 step 1>,
 
     # The inventory level at each MC impacted by the production rate
     # The goal is to accumulate enough, but not to accumulate too much
@@ -68,9 +68,9 @@ type ObservableState {
     Pittsburg_util_trucks: number<0 .. 1>,
     Nashville_util_trucks: number<0 .. 1>,
 
-    Chicago_num_trucks: number<1 .. 3>,
-    Pittsburg_num_trucks: number<1 .. 3>,
-    Nashville_num_trucks: number<1 .. 3>,
+    Chicago_num_trucks: number<1 .. 3 step 1>,
+    Pittsburg_num_trucks: number<1 .. 3 step 1>,
+    Nashville_num_trucks: number<1 .. 3 step 1>,
 
     Chicago_inventory_level: number,
     Pittsburg_inventory_level: number,
@@ -97,9 +97,9 @@ type ObservableState {
 
 type SimAction {
     # Whether to keep each MC closed or open
-	Chicago_is_open: number<0..1 step 1>,
-	Pittsburg_is_open: number<0..1 step 1>,
-	Nashville_is_open: number<0..1 step 1>,
+	Chicago_is_open: number<0, 1, >,
+	Pittsburg_is_open: number<0, 1, >,
+	Nashville_is_open: number<0, 1, >,
     
     # Number of trucks to allocate to each MC at each iteration
 	Chicago_num_trucks: number<1..3 step 1>,
@@ -107,9 +107,9 @@ type SimAction {
 	Nashville_num_trucks: number<1..3 step 1>,
     
     # Production rate at each MC at each iteration
-	Chicago_production_rate: number<50..80 step 1>,
-	Pittsburg_production_rate: number<50..80 step 1>,
-	Nashville_production_rate: number<50..80 step 1>,
+	Chicago_production_rate: number<50..80>,
+	Pittsburg_production_rate: number<50..80>,
+	Nashville_production_rate: number<50..80>,
 }
 
 type SimConfig {
@@ -149,7 +149,7 @@ function Reward(state: SimState) {
     if (state.Chicago_is_open + state.Pittsburg_is_open + state.Nashville_is_open == 0) {
         return -40
     }
-
+	
     var OpenMCs_average_turnaround = calc_turnaround_reward(state.overall_average_turnaround)
     var Chicago_truck = calc_utilization_reward(state.Chicago_util_trucks)
     var Pittsburg_truck = calc_utilization_reward(state.Pittsburg_util_trucks)
