@@ -8714,218 +8714,106 @@ Vehicles move on real roads, and routes are created when vehicles start moving t
 				<FinalTime><![CDATA[720.0]]></FinalTime>	
 			</ModelTimeProperties>
 			<ObservationField>
-				<Name><![CDATA[Chicago_is_accepting]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[acceptingness]]></Name>
+				<Type><![CDATA[int[]]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Pittsburg_is_accepting]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[num_vehicles]]></Name>
+				<Type><![CDATA[int[]]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Nashville_is_accepting]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[production_rates]]></Name>
+				<Type><![CDATA[double[]]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Chicago_num_vehicles]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[vehicle_utilizations]]></Name>
+				<Type><![CDATA[double[]]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Pittsburg_num_vehicles]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[inventory_levels]]></Name>
+				<Type><![CDATA[double[]]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Nashville_num_vehicles]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[queue_sizes]]></Name>
+				<Type><![CDATA[int[]]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Chicago_production_rate]]></Name>
+				<Name><![CDATA[rolling_turnaround_hours]]></Name>
+				<Type><![CDATA[double[]]]></Type>
+			</ObservationField>
+			<ObservationField>
+				<Name><![CDATA[accepting_rolling_turnaround_hours]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Pittsburg_production_rate]]></Name>
+				<Name><![CDATA[rolling_cost_per_products]]></Name>
+				<Type><![CDATA[double[]]]></Type>
+			</ObservationField>
+			<ObservationField>
+				<Name><![CDATA[accepting_rolling_cost_per_products]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ObservationField>
 			<ObservationField>
-				<Name><![CDATA[Nashville_production_rate]]></Name>
+				<Name><![CDATA[time_hours]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Chicago_util_vehicles]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Pittsburg_util_vehicles]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Nashville_util_vehicles]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Chicago_inventory_level]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Pittsburg_inventory_level]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Nashville_inventory_level]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Chicago_products_queueing]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Pittsburg_products_queueing]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Nashville_products_queueing]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Chicago_average_turnaround]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Pittsburg_average_turnaround]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Nashville_average_turnaround]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Chicago_cost_per_product]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Pittsburg_cost_per_product]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[Nashville_cost_per_product]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[overall_average_turnaround]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[overall_average_cost_per_product]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationField>
-				<Name><![CDATA[time]]></Name>
-				<Type><![CDATA[double]]></Type>
-			</ObservationField>
-			<ObservationCode><![CDATA[Chicago_is_accepting = root.manufacturingCenters(0).is_accepting;
-Pittsburg_is_accepting = root.manufacturingCenters(1).is_accepting;
-Nashville_is_accepting = root.manufacturingCenters(2).is_accepting;
+			<ObservationCode><![CDATA[ManufacturingCenter chi = root.manufacturingCenters(0);
+ManufacturingCenter pit = root.manufacturingCenters(1);
+ManufacturingCenter nsh = root.manufacturingCenters(2);
 
-Chicago_num_vehicles = root.manufacturingCenters(0).nVehicles;
-Pittsburg_num_vehicles = root.manufacturingCenters(1).nVehicles;
-Nashville_num_vehicles = root.manufacturingCenters(2).nVehicles;
+acceptingness = new int[]{chi.is_accepting, pit.is_accepting, nsh.is_accepting};
+num_vehicles = new int[]{chi.nVehicles, pit.nVehicles, nsh.nVehicles};
+production_rates = new double[]{chi.productionRate, pit.productionRate, nsh.productionRate};
 
-Chicago_production_rate = root.manufacturingCenters(0).productionRate;
-Pittsburg_production_rate = root.manufacturingCenters(1).productionRate;
-Nashville_production_rate = root.manufacturingCenters(2).productionRate;
+vehicle_utilizations = new double[]{chi.fleet.utilization(), pit.fleet.utilization(), nsh.fleet.utilization()};
+inventory_levels = new double[]{chi.inventory, pit.inventory, nsh.inventory};
+queue_sizes = new int[]{chi.getProductsQueueing(), pit.getProductsQueueing(), nsh.getProductsQueueing()};
 
-Chicago_util_vehicles = root.manufacturingCenters(0).fleet.utilization();
-Pittsburg_util_vehicles = root.manufacturingCenters(1).fleet.utilization();
-Nashville_util_vehicles = root.manufacturingCenters(2).fleet.utilization();
+rolling_turnaround_hours = new double[]{chi.getRollingMeanTurnaroundTime(), pit.getRollingMeanTurnaroundTime(), nsh.getRollingMeanTurnaroundTime()};
+accepting_rolling_turnaround_hours = root.rollingMeanDuration;
 
-Chicago_inventory_level = root.manufacturingCenters(0).inventory;
-Pittsburg_inventory_level = root.manufacturingCenters(1).inventory;
-Nashville_inventory_level = root.manufacturingCenters(2).inventory;
+rolling_cost_per_products = new double[]{chi.getRollingTotalCostsPerProduct(), pit.getRollingTotalCostsPerProduct(), nsh.getRollingTotalCostsPerProduct()};
+accepting_rolling_cost_per_products = root.rollingMeanCostPerProduct;
 
-Chicago_products_queueing = root.manufacturingCenters(0).getProductsQueueing();
-Pittsburg_products_queueing = root.manufacturingCenters(1).getProductsQueueing();
-Nashville_products_queueing = root.manufacturingCenters(2).getProductsQueueing();
-
-Chicago_average_turnaround = root.manufacturingCenters(0).getRollingMeanTurnaroundTime();
-Pittsburg_average_turnaround = root.manufacturingCenters(1).getRollingMeanTurnaroundTime();
-Nashville_average_turnaround = root.manufacturingCenters(2).getRollingMeanTurnaroundTime();
-
-Chicago_cost_per_product = root.manufacturingCenters(0).getRollingTotalCostsPerProduct();
-Pittsburg_cost_per_product = root.manufacturingCenters(1).getRollingTotalCostsPerProduct();
-Nashville_cost_per_product = root.manufacturingCenters(2).getRollingTotalCostsPerProduct();
-
-overall_average_turnaround = root.rollingMeanDuration;
-overall_average_cost_per_product = root.rollingMeanCostPerProduct;
-
-time = root.time(HOUR);
-]]></ObservationCode>
+time_hours = root.time(HOUR);]]></ObservationCode>
 			<StopCondition><![CDATA[false]]></StopCondition>
 			<ActionField>
-				<Name><![CDATA[Chicago_is_accepting]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[acceptingness]]></Name>
+				<Type><![CDATA[int[]]]></Type>
 			</ActionField>
 			<ActionField>
-				<Name><![CDATA[Pittsburg_is_accepting]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[num_vehicles]]></Name>
+				<Type><![CDATA[int[]]]></Type>
 			</ActionField>
 			<ActionField>
-				<Name><![CDATA[Nashville_is_accepting]]></Name>
-				<Type><![CDATA[int]]></Type>
+				<Name><![CDATA[production_rates]]></Name>
+				<Type><![CDATA[double[]]]></Type>
 			</ActionField>
-			<ActionField>
-				<Name><![CDATA[Chicago_num_vehicles]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ActionField>
-			<ActionField>
-				<Name><![CDATA[Pittsburg_num_vehicles]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ActionField>
-			<ActionField>
-				<Name><![CDATA[Nashville_num_vehicles]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ActionField>
-			<ActionField>
-				<Name><![CDATA[Chicago_production_rate]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ActionField>
-			<ActionField>
-				<Name><![CDATA[Pittsburg_production_rate]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ActionField>
-			<ActionField>
-				<Name><![CDATA[Nashville_production_rate]]></Name>
-				<Type><![CDATA[int]]></Type>
-			</ActionField>
-			<ActionCode><![CDATA[root.manufacturingCenters(0).set_productionRate(Chicago_production_rate, RateUnits.PER_HOUR);
-root.manufacturingCenters(1).set_productionRate(Pittsburg_production_rate, RateUnits.PER_HOUR);
-root.manufacturingCenters(2).set_productionRate(Nashville_production_rate, RateUnits.PER_HOUR);
-
-root.manufacturingCenters(0).set_is_accepting(Chicago_is_accepting);
-root.manufacturingCenters(1).set_is_accepting(Pittsburg_is_accepting);
-root.manufacturingCenters(2).set_is_accepting(Nashville_is_accepting);
-
-root.manufacturingCenters(0).set_nVehicles(Chicago_num_vehicles);
-root.manufacturingCenters(1).set_nVehicles(Pittsburg_num_vehicles);
-root.manufacturingCenters(2).set_nVehicles(Nashville_num_vehicles);
-
-root.manufacturingCenters(0).fleet.resetStats();
-root.manufacturingCenters(1).fleet.resetStats();
-root.manufacturingCenters(2).fleet.resetStats();]]></ActionCode>
+			<ActionCode><![CDATA[for (int i = 0; i < 3; i++) { // 3 MCs; arrays should be size 3
+	ManufacturingCenter mc = root.manufacturingCenters(i);
+	mc.set_is_accepting(acceptingness[i]);
+	mc.set_nVehicles(num_vehicles[i]);
+	mc.set_productionRate(production_rates[i], RateUnits.PER_HOUR);
+	mc.fleet.resetStats();
+}]]></ActionCode>
 			<ConfigurationField>
-				<Name><![CDATA[FirstActionTime_Days]]></Name>
+				<Name><![CDATA[first_action_time_days]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ConfigurationField>
 			<ConfigurationField>
-				<Name><![CDATA[RecurrenceActionTime_Days]]></Name>
+				<Name><![CDATA[action_recurrence_days]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ConfigurationField>
 			<ConfigurationField>
-				<Name><![CDATA[RollingWindowSize_Days]]></Name>
+				<Name><![CDATA[rolling_window_size_days]]></Name>
 				<Type><![CDATA[double]]></Type>
 			</ConfigurationField>
-			<ConfigurationCode><![CDATA[root.daysTilFirstStep = FirstActionTime_Days;
-root.daysBetweenSteps = RecurrenceActionTime_Days;
-root.daysRollingWindow = RollingWindowSize_Days;
-]]></ConfigurationCode>
+			<ConfigurationCode><![CDATA[// ensure in training mode
+root.bonsaiMode = 0;
+
+root.daysTilFirstStep = first_action_time_days;
+root.daysBetweenSteps = action_recurrence_days;
+root.daysRollingWindow = rolling_window_size_days;]]></ConfigurationCode>
 		</ReinforcementLearningExperiment>
 	</Experiments>
 	<ModelResources>
