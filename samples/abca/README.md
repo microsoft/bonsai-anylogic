@@ -38,7 +38,15 @@ Do not click Train yet.
 
 # Running the Model
 
-To run the model, right click on **AnimatedExperiment** then click the **Run** button. You will see text in the console about registering with the Bonsai platform. Once registration is complete (it will only take a few seconds), go back to the Bonsai UI where you created your brain.
+To run the model for training, you have to first setup the connector to work
+with the Bonsai Platform.  Pick your `workspace-id` and `access-key` and
+insert them in the main Bonsai connector in the Anylogic simulation.  For this
+simulation, you can find the connector in the *Project* tab under
+`Activity Based Costing Analysis (Bonsai) -> Main -> Agents -> bonsaiConnector`.
+After that is correctly set up, you can right-click on **TrainingSimulation**
+and then click the **Run** button.  This will register the simulation with the
+Bonsai platform.  You can now go back to the Bonsai UI where you created your
+brain.
 
 Click the **Train** button. The simulator with the name matching your simulator will appear (in the example above, this is called *AnyLogic - ABCA*). Click the name of your simulator. 
 
