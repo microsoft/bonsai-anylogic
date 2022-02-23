@@ -2,260 +2,152 @@
 # Licensed under the MIT License.
 inkling "2.0"
 
-using Number
 using Math
 
+# Array index of Chicago
+const ICHI = 0
 
-#what the simulator sends
+# Array index of Pittsburg
+const IPIT = 1
+
+# Array index of Nashville
+const INSH = 2
+
+# What the simulator sends
 type SimState {
-    # Whether MC was open or not in last iteration
-    Chicago_is_open: number<0,1,>,
-    Pittsburg_is_open: number<0,1,>,
-    Nashville_is_open: number<0,1,>,
+    # Whether each MC was accepting or not in last iteration
+    acceptingness: number<0, 1,>[3],
     
-    # The truck utilization percentage at each MC
-    # Out of trucks allocated to each MC, how much the trucks were used?
-    Chicago_util_trucks: number<0..1>,
-    Pittsburg_util_trucks: number<0..1>,
-    Nashville_util_trucks: number<0..1>,
+    # Number of vehicles in use at each MC in last iteration
+    num_vehicles: number<1 .. 3 step 1>[3],
 
-    # Number of trucks offered to each MC in last iteration- it can use the truck or not
-    Chicago_num_trucks: number<1..3>,
-	Pittsburg_num_trucks: number<1..3>,
-    Nashville_num_trucks: number<1..3>,
-    
-    # The inventory level at each MC impacted by the production rate
-    # The goal is to accumulate enough, but not to accumulate too much
-    # If you have too much in stock and not enough trucks, you have to wait until trucks are available
-    Chicago_inventory_level: number<0..30000>,
-    Pittsburg_inventory_level: number<0..30000>,
-    Nashville_inventory_level: number<0..30000>,
-	
-    # Orders queueing at each MC
-	Chicago_products_queueing: number<0 .. 200000>,
-    Pittsburg_products_queueing: number<0 .. 200000>,
-    Nashville_products_queueing: number<0 .. 200000>,
-    
-    # Production rate at each MC in last iteration
-    Chicago_production_rate: number<50 .. 80>,
-    Pittsburg_production_rate: number<50 .. 80>,
-    Nashville_production_rate: number<50 .. 80>,
-    
-    # Turnaround time is the average time from when the order is requested until it is delivered
-    # Return 720 if no order is delivered
-    Chicago_average_turnaround: number<0 .. 720>,
-    Pittsburg_average_turnaround: number<0 .. 720>,
-    Nashville_average_turnaround: number<0 .. 720>,
-    overall_average_turnaround: number<0 .. 720>,
+    # The hourly rate that new products are added to each MC's inventory in the last iteration
+    production_rates: number<50 .. 80>[3],
 
-    # Average cost per product
-	Chicago_cost_per_product: number,
-    Pittsburg_cost_per_product: number,
-    Nashville_cost_per_product: number,
-    overall_average_cost_per_product: number,
+    # The average utilization percentage of each vehicle at each MC
+    # (0 = No vehicles used, 1 = All vehicles in use, 100% of the time)
+    vehicle_utilizations: number<0 .. 1>[3],
+
+    # The inventory level at each MC at the time of the iteration
+    # It's impacted by the production rate
+    inventory_levels: number[3],
+
+    # The number of products (across all orders) waiting to be serviced at each MC
+    queue_sizes: number[3],
+
+    # The average time (in hours) within the rolling window that it takes for an order to be serviced
+    # (Starting from when it arrives at the MC and ending when it is delivered)
+    rolling_turnaround_hours: number[3],
+
+    # The averaged value of `rolling_turnaround_hours` for all MCs currently accepting new orders
+    accepting_rolling_turnaround_hours: number,
     
-    # Based on model time
-    time: number<0 .. 800>
+    # The average cost within the rolling window of a single product (across all orders)
+    rolling_cost_per_products: number[3],
+
+    # The averaged value of `rolling_cost_per_products` for all MCs currently accepting new orders
+	accepting_rolling_cost_per_products: number,
+    
+    # Current model time, represented in hours
+	time_hours: number
 }
 
-#what the brain sees during training
+# What the brain sees during training
 type ObservableState {
-    Chicago_is_open: number<0,1,>,
-    Pittsburg_is_open: number<0,1,>,
-    Nashville_is_open: number<0,1,>,
-	
-    Chicago_util_trucks: number<0..1>,
-    Pittsburg_util_trucks: number<0..1>,
-    Nashville_util_trucks: number<0..1>,
-
-    Chicago_num_trucks: number<1..3>,
-	Pittsburg_num_trucks: number<1..3>,
-    Nashville_num_trucks: number<1..3>,
-	
-    Chicago_inventory_level: number<0..30000>,
-    Pittsburg_inventory_level: number<0..30000>,
-    Nashville_inventory_level: number<0..30000>,
-	
-	Chicago_products_queueing: number<0 .. 200000>,
-    Pittsburg_products_queueing: number<0 .. 200000>,
-    Nashville_products_queueing: number<0 .. 200000>,
-	
-    Chicago_production_rate: number<50 .. 80>,
-    Pittsburg_production_rate: number<50 .. 80>,
-    Nashville_production_rate: number<50 .. 80>,
-	
-	Chicago_average_turnaround: number<0 .. 720>,
-    Pittsburg_average_turnaround: number<0 .. 720>,
-    Nashville_average_turnaround: number<0 .. 720>,
-    overall_average_turnaround: number<0 .. 720>,
-    
-	Chicago_cost_per_product: number,
-    Pittsburg_cost_per_product: number,
-    Nashville_cost_per_product: number,
-    overall_average_cost_per_product: number,
-
-    time: number<0 .. 800>
+    acceptingness: number<0, 1,>[3],
+    num_vehicles: number<1 .. 3 step 1>[3],
+    production_rates: number<50 .. 80>[3],
+    vehicle_utilizations: number<0 .. 1>[3],
+    inventory_levels: number[3],
+    queue_sizes: number[3],
+    rolling_turnaround_hours: number[3],
+    accepting_rolling_turnaround_hours: number,
+    rolling_cost_per_products: number[3],
+    accepting_rolling_cost_per_products: number
 }
 
 type SimAction {
-    # Whether to keep each MC closed or open
-	Chicago_is_open: number<0..1 step 1>,
-	Pittsburg_is_open: number<0..1 step 1>,
-	Nashville_is_open: number<0..1 step 1>,
-    
-    # Number of trucks to allocate to each MC at each iteration
-	Chicago_num_trucks: number<1..3 step 1>,
-	Pittsburg_num_trucks: number<1..3 step 1>,
-	Nashville_num_trucks: number<1..3 step 1>,
-    
-    # Production rate at each MC at each iteration
-	Chicago_production_rate: number<50..80 step 1>,
-	Pittsburg_production_rate: number<50..80 step 1>,
-	Nashville_production_rate: number<50..80 step 1>,
+    # Whether each MC should accept orders
+    # Orders that would normally go to an MC are redirect to the nearest open MC
+    acceptingness: number<0, 1,>[3],
+	
+	# Number of vehicles to allocate to each MC
+    num_vehicles: number<1 .. 3 step 1>[3],
+	
+	 # Hourly production rate at each MC
+    production_rates: number<50 .. 80>[3]
 }
 
 type SimConfig {
-    OpenCost_PerHour: number,
-	ProductionCost_PerHour: number,
-    IncompleteOrderPenalty_PerHour: number,
-    TruckCost_PerHour: number,
-    
-	FirstActionTime_Days: number,
-	RecurrenceActionTime_Days: number,
-	RollingWindowSize_Days: number,
+    # When the first iteration should happen, in days
+    first_action_time_days: number,
 
-}
+    # How many days should pass between iterations (starting after the first iteration)
+    action_recurrence_days: number,
 
-# Temporal reward for all MCs 
-function overall_reward_time(state: SimState) {
-    # Overall-level
-    # Return a harsh penalty if turnaround time is larger than 500
-    if state.overall_average_turnaround > 500 {
-        return -40
-    }
-    if state.overall_average_turnaround > 80 {
-        return -5
-    }
-    var overall_average_turnaround_scaled = state.overall_average_turnaround / 80
-    return Math.E ** (-1 * overall_average_turnaround_scaled)
-}
-# Temporal reward for Chicago 
-function Chicago_reward_time(state: SimState) {
-    # MC-level
-    # Return a harsh penalty if turnaround time is larger than 500
-    if state.Chicago_average_turnaround > 500 {
-        return -40
-    }
-    if state.Chicago_average_turnaround > 80 {
-        return -5
-    }
-    var Chicago_average_turnaround_scaled = state.Chicago_average_turnaround / 80
-    return Math.E ** (-1 * Chicago_average_turnaround_scaled)
-}
-# Temporal reward for Pittsburg
-function Pittsburg_reward_time(state: SimState) {
-    # MC-level
-    if state.Pittsburg_average_turnaround > 500 {
-        return -40
-    }
-    if state.Pittsburg_average_turnaround > 80 {
-        return -5
-    }
-    var Pittsburg_average_turnaround_scaled = state.Pittsburg_average_turnaround / 80
-    return Math.E ** (-1 * Pittsburg_average_turnaround_scaled)
-}
-# Temporal reward for Nashville
-function Nashville_reward_time(state: SimState) {
-    # MC-level
-    if state.Nashville_average_turnaround > 500 {
-        return -40
-    }
-    if state.Nashville_average_turnaround > 80 {
-        return -5
-    }    
-    var Nashville_average_turnaround_scaled = state.Nashville_average_turnaround / 80
-    return Math.E ** (-1 * Nashville_average_turnaround_scaled)
+    # How many days should encompass the rolling window
+    # Larger sizes more accurately capture the statistically "true" values,
+    #   but smaller sizes better reflect the impact of the brain's actions
+    rolling_window_size_days: number
 }
 
-# Truck utilization for Chicago
-function Chicago_reward_trUti(state: SimState) {
-    # MC-level 
-    if state.Chicago_util_trucks > 0 and state.Chicago_util_trucks <= 0.25 {
+# Converts a given turnaround time (a temporal value, in hours) to a feedback value for the brain
+# This is used as part of the larger reward function
+function calc_turnaround_reward(turnaround: number) {
+    # Return a harsh penalty if it takes longer than 3 weeks to fulfill an order
+    if turnaround > 500 {
+        return -40
+    }
+    # Return a somewhat harsh penalty if it takes longer than 3 days to fulfill an order
+    if turnaround > 80 {
+        return -5
+    }
+    # Use a scaled, negative, natural exponential function for the reward (values range: [~0.37,1])
+    # https://www.desmos.com/calculator/uq0ajpn2bs
+    var turnaround_scaled = turnaround / 80
+    return Math.E ** (-1 * turnaround_scaled)
+}
+
+
+# Converts a given vehicle utilization (a percentage, in fraction form) to a feedback value for the brain
+# This is used as part of the larger reward function
+function calc_utilization_reward(utilization: number) {
+    # Return a penalty for no usage and otherwise a higher score for more usage
+    if utilization <= 0 {
+        return -1
+    } else if utilization <= 0.25 {
         return 0.2
-    }
-    if state.Chicago_util_trucks > 0.25 and state.Chicago_util_trucks <= 0.5 {
+    } else if utilization <= 0.5 {
         return 0.4
-    }
-    if state.Chicago_util_trucks > 0.5 and state.Chicago_util_trucks <= 0.75 {
+    } else if utilization <= 0.75 {
         return 0.6
-    }
-    if state.Chicago_util_trucks > 0.75 {
+    } else { # utilization > 0.75
         return 1
     }
-    return -1 # This corresponds to utilization of 0
-}
-# Truck utilization for Pittsburg
-function Pittsburg_reward_trUti(state: SimState) {
-    # MC-level
-    if state.Pittsburg_util_trucks > 0 and state.Pittsburg_util_trucks <= 0.25 {
-        return 0.2
-    }
-    if state.Pittsburg_util_trucks > 0.25 and state.Pittsburg_util_trucks <= 0.5 {
-        return 0.4
-    }
-    if state.Pittsburg_util_trucks > 0.5 and state.Pittsburg_util_trucks <= 0.75 {
-        return 0.6
-    }
-    if state.Pittsburg_util_trucks > 0.75 {
-        return 1
-    }
-    return -1 # This corresponds to utilization of 0
-}
-# Truck utilization for Nashville
-function Nashville_reward_trUti(state: SimState) {
-    # MC-level
-    if state.Nashville_util_trucks > 0 and state.Nashville_util_trucks <= 0.25 {
-        return 0.2
-    }
-    if state.Nashville_util_trucks > 0.25 and state.Nashville_util_trucks <= 0.5 {
-        return 0.4
-    }
-    if state.Nashville_util_trucks > 0.5 and state.Nashville_util_trucks <= 0.75 {
-        return 0.6
-    }
-    if state.Nashville_util_trucks > 0.75 {
-        return 1
-    }
-    return -1 # This corresponds to utilization of 0
 }
 
+# Converts a state to a single numerical reward
 function Reward(state: SimState) {
+    # Return a harsh penalty if no MCs are accepting (= orders are being lost!)
+    if (state.acceptingness[ICHI] + state.acceptingness[IPIT] + state.acceptingness[INSH] == 0) {
+        return -40
+    }
 
-    var Nashville_temporal = Nashville_reward_time(state)
-    var Chicago_temporal = Chicago_reward_time(state)
-    var Pittsburg_temporal = Pittsburg_reward_time(state)
-    var all_temporal = overall_reward_time(state)
-    var Chicago_truck = Chicago_reward_trUti(state)
-    var Pittsburg_truck = Pittsburg_reward_trUti(state)
-    var Nashville_truck = Nashville_reward_trUti(state)
-    
-	# Return a harsh penalty if all MCs are closed at the same time
-    if ( state.Chicago_is_open + state.Pittsburg_is_open + state.Nashville_is_open == 0 ) {
-		return -40
-    }
-    else {
-        var overall_temporal = all_temporal
-        var overall_truck = Chicago_truck + Pittsburg_truck + Nashville_truck
-        var overall_reward = overall_temporal + overall_truck
-        return overall_reward
-    }
+    # Otherwise, give a reward based on the turnaround time for all accepting MCs and the vehicle utilization of all MCs
+    var accepting_turnaround_reward = calc_turnaround_reward(state.accepting_rolling_turnaround_hours)
+    var chi_util_reward = calc_utilization_reward(state.vehicle_utilizations[ICHI])
+    var pit_util_reward = calc_utilization_reward(state.vehicle_utilizations[IPIT])
+    var nsh_util_reward = calc_utilization_reward(state.vehicle_utilizations[INSH])
+
+    return accepting_turnaround_reward + chi_util_reward + pit_util_reward + nsh_util_reward
 }
 
+# Checks whether the sim should be reset based on the current state
 function Terminal(state: SimState) {
-    if state.time >= 720 {
+    # Terminates after 30 days or if the mean turnaround time for currently-accepting MCs is over 4 days
+    if state.time_hours >= 720 {
         return true
-    }
-    else if state.overall_average_cost_per_product > 100 {
+    } else if state.accepting_rolling_turnaround_hours > 100 {
         return true
     }
     return false
@@ -274,17 +166,16 @@ graph (input: ObservableState): SimAction {
             terminal Terminal
             training {
                 NoProgressIterationLimit: 1000000
-            }            
+            }
 
             lesson default {
                 scenario {
-                    OpenCost_PerHour: 200,
-                    ProductionCost_PerHour: 65,
-                    IncompleteOrderPenalty_PerHour: 5,
-                    TruckCost_PerHour: 15,
-					FirstActionTime_Days: 4,
-					RecurrenceActionTime_Days: 3,
-					RollingWindowSize_Days: 3,
+                    # Lets the model "warmup" for 4 days,
+                    #   then takes a new action every 3 days,
+                    #   with statistics based on 3 day windows.
+					first_action_time_days: 4,
+					action_recurrence_days: 3,
+					rolling_window_size_days: 3,
                 }
             }
         }
