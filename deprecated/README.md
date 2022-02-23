@@ -1,14 +1,10 @@
-# Overview of the Bonsai Connector for AnyLogic
-The Bonsai Connector is a library add-in to AnyLogic that allows users to connect their AnyLogic models to the Microsoft Bonsai platform.  
+# Current Supported Version
+AnyLogic 8.7.8 and later.
 
-After downloading the <a href="https://www.anylogic.com/features/artificial-intelligence/microsoft-bonsai/">wrapper</a> from AnyLogic, check out the <a href="connector/wrapper_model_workflow.pdf">wrapper model workflow</a> document to learn more about incorporating it with your own model.
+# Deprecated Libraries
 
-There are a number of samples packaged with the connector:
+This directory contains previous versions of the AnyLogic connector that are no longer under active development. The directory is organized by the AnyLogic version that the connector supports.
 
-- <a href="samples/abca">Activity Based Costing</a> - a simplified factory floor model for cost associated with product processing is calculated and analyzed.
-- <a href="samples/product-delivery">Product Delivery</a> -  simulates product delivery between three manufacturing facilities and fifteen distributors in the USA.
+- **v8-8.6** - Examples for AnyLogic 8.0-8.6, prior to AnyLogic introducing the <a href="https://anylogic.help/anylogic/experiments/rl-experiment.html">Reinforcement Learning experiment</a>.
 
-
-## Microsoft Open Source Code of Conduct
-
-This repository is subject to the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct).
+- **v8.7.0-8.7.7** - Examples for AnyLogic 8.7-8.7.7, including the <a href="https://anylogic.help/anylogic/experiments/rl-experiment.html">Reinforcement Learning experiment</a>. 
