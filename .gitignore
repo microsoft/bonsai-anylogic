@@ -1,4 +1,11 @@
 .DS_Store
+.jekyll-metadata
+.idea
+.bundle/
+.sass-cache/
+_site/
+vendor/
+_pdf
 *.lck
 *.log
 *.autosave

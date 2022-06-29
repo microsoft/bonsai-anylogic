@@ -1,0 +1,15 @@
+<footer>
+            <div class="row">
+                <div class="col-lg-12 footer">
+					&copy;{{ site.time | date: "%Y"  }} {{site.company_name}}. All rights reserved. <br />
+					{% if page.last_updated %}
+					<span>Page last updated:</span> {{page.last_updated}}<br/>
+					{% endif %} 
+					Site last generated: {{ site.time | date: "%b %-d, %Y"  }} <br />
+					Updated for AnyLogic v{{ site.data.versioning.anylogic }}, Bonsai Connector v{{ site.data.versioning.bonsai_connector }} <br />
+					<p><img src="{{ "images/company_logo.png" }}" alt="Company logo"/></p>
+                </div>
+            </div>
+</footer>
+
+
