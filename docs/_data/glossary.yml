@@ -1,0 +1,37 @@
+brain: "The eventual output of RL; a trained AI policy that can be queried for a (theoretically optimal) output based on a provided input."
+
+inkling: "The programming language used on the bonsai platform for training brains. It is used to define what the AI should learn and its training regimen."
+
+traditional_model: "A simulation model without any RL components."
+
+rl_ready_model: "A simulation model that has the components necessary to be used as the training environment for an AI algorithm."
+
+episode: "A single simulation run, from start to finish; used in the context of training."
+
+configuration: "A set of variables that define a scenario or starting condition for each episode."
+
+observation: "A set of variables that describe the environment at a given point in time. This is the input to the AI algorithm."
+
+state: "For the purpose of this guide, synonymous with Observation."
+
+action: "A set of variables that the AI algorithm has control over in the environment. This is the output of the AI algorithm."
+
+terminal_condition: "A (boolean) flag or indicator for when to end an episode, allowing another to begin."
+
+iteration: "The process of taking an observation from the simulation, using it to query the AI algorithm (the brain) for an action and applying the action."
+
+iteration_trigger: "An event inside the simulation model that pauses the simulation model and initiates an iteration, after which the simulation model resumes."
+
+bonsai_library: "An AnyLogic plugin/add-on library giving access to the Bonsai Connector object."
+
+bonsai_connector: "An object part of AnyLogic's Bonsai Library which is necessary to be added to your top-level agent for communicating with the Bonsai platform during locally hosted training."
+
+locally_hosted_training: "Performing RL training with the simulation model hosted on your local machine."
+
+uploaded_training: "Performing RL training with the simulation model uploaded to Microsoft Azure, allowing training to be scaled."
+
+assessment: "The act of evaluating a brain’s performance across a number of episodes."
+
+playback: "A feature in the Bonsai Connector, allowing connection to an exported brain for assessment purposes."
+
+platform: "The environment hosting the reinforcement learning algorithms; in this case, Bonsai."

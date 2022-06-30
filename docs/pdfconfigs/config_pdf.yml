@@ -1,0 +1,19 @@
+destination: _site/
+url: "http://127.0.0.1:4000"
+baseurl: "/bonsai-anylogic-pdf"
+port: 4000
+product: workflow
+print_title: Bonsai-AnyLogic Workflow Documentation
+print_subtitle: version 1.0
+output: pdf
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page_print"
+      comments: true
+      search: true
+
+pdf_sidebar: main_sidebar

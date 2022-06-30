@@ -1,0 +1,118 @@
+entries:
+- title: Sidebar
+  product: AnyLogic-Bonsai Workflow
+  folders:
+
+  - title:
+    output: pdf
+    type: frontmatter
+    folderitems:
+    - title:
+      url: /titlepage.html
+      output: pdf
+      type: frontmatter
+    - title:
+      url: /tocpage.html
+      output: pdf
+      type: frontmatter
+
+  - title: Introduction
+    output: web, pdf
+    folderitems:
+
+    - title: Getting started
+      url: /index.html
+      output: web, pdf
+      type: homepage
+
+    - title: Definitions
+      url: /intro_definitions.html
+      output: web, pdf
+
+    - title: Three use cases for RL with Simulation
+      url: /intro_usecases.html
+      output: web, pdf
+
+    - title: What constitutes an RL-ready simulation model
+      url: /intro_rlready.html
+      output: web, pdf
+
+  - title: Components of RL-ready simulation models
+    output: web, pdf
+    folderitems:
+
+    - title: Overview
+      url: /components_overview.html
+      output: web, pdf
+
+    - title: RL Experiment
+      url: /components_rlexperiment.html
+      output: web, pdf
+      
+    - title: Bonsai Connector
+      url: /components_connector.html
+      output: web, pdf
+      
+    - title: Iteration trigger
+      url: /components_itertrigger.html
+      output: web, pdf
+      
+    - title: Mode parameter
+      url: /components_parameter.html
+      output: web, pdf
+
+  - title: Brain training
+    output: web, pdf
+    folderitems:
+
+    - title: Locally Hosted
+      url: /training_local.html
+      output: web, pdf
+
+    - title: Uploaded (Scaled)
+      url: /training_scaled.html
+      output: web, pdf
+
+  - title: Brain testing
+    output: web, pdf
+
+    folderitems:
+    - title: Querying exported brains
+      url: /testing_querying.html
+      output: web, pdf
+
+    - title: Usage on AnyLogic Cloud
+      url: /testing_cloud.html
+      output: web, pdf
+
+  - title: Tutorials
+    output: web, pdf
+
+    folderitems:
+    - title: Stock Management Game
+      url: /tutorial_stock.html
+      output: web, pdf
+
+  - title: Advanced topics
+    output: web, pdf
+
+    folderitems:
+    - title: Event sequence in model creation process
+      url: /appendix_creation-events.html
+      output: web, pdf
+
+    - title: Order of events with iteration trigger
+      url: /appendix_iteration-events.html
+      output: web, pdf
+
+    - title: Allowed data types for the RL Experiment
+      url: /appendix_datatypes.html
+      output: web, pdf
+
+  - title: Troubleshooting
+    output: web, pdf
+
+    folderitems:
+    - title: Troubleshooting
+      url: /troubleshooting.html
+      output: web, pdf
