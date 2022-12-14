@@ -1,92 +1,100 @@
-# Use case: Product Delivery
+# Product Delivery
 
-## Use case problem
+A single-echelon supply chain for a single product produced by manufacturing centers who fulfill orders sent by distributors. 
 
-### Problem description
+The manufacturing process is continuous and is controlled by a set production rate, measured in units per hour. Two sources of cost are modeled for each center:
 
-The supply chain includes three manufacturing centers (Chicago, Nashville, Pittsburg) and fifteen distribution centers that order random amounts of the product. Each distribution center orders between 500 and 1000 products, uniformly distributed – every 2-10 days. This suggests that
+1. Holding cost - for expenses related to having to store the product on-site; accumulated at a rate relative to the number of products currently on-hand.
 
-- There is a minimum of two days between orders placed by the same distribution center
-- There can be up to 15 orders placed per day by all distribution centers
+2. Maintenance cost - for expenses related to up-keep of the machine used to create the product; accumulated at a fixed rate plus additional costs whenever the machine is changing its speed.
 
-<img src="Images/scenario.png" alt="drawing" width="800"/>
+Note: Any other sources of costs are considered irrelevant or negligible and are thus not modeled.
 
-There is a fleet of 3 trucks available at each manufacturing center to deliver the products to the distribution centers. When a manufacturing center receives an order from a distribution center, it checks the number of available products in storage.
-If the requested amount of product is available and there are trucks available at the manufacturing center, it sends loaded trucks to the distribution center. Otherwise, the order waits until the factory produces the sufficient amount of products or there are trucks available. The orders are always sent to the closest manufacturing center and the shortage of product at any specific manufacturing center does not lead to a transfer of the order to another manufacturing center. Upon closure of one manufacturing center or in case of not accepting new orders, its order will be transferred to the next closest manufacturing center.
+Each distributor has a different chance to order for each day of the week in addition to individualized distributions for the order sizes. Additionally, there is an order cycle (default duration of 13 weeks) that affects all distributors' chance to order.
 
-<img src="Images/order-distribution.png" alt="drawing" width="1000"/>
-
-Note that orders can be of varying sizes and only one order (regardless of its size) can be processed at the time and they are queued based on first-in-first-out.
-
-### Terminology
-
-The turnaround time is defined as the time it takes for the order to be received by the distribution center from the time the order has been placed.
-
-T<sub><em>order</em></sub> : Time the order has been placed by the distribution center.
-
-T<sub><em>receipt</em></sub> : Time the order has been received by the distribution center.
-
-T<sub><em>turnaround</em></sub>  = T<sub><em>receipt</em></sub> - T<sub><em>order</em></sub>
-
-For each manufacturing center, the cost consists of
-- **Truck costs:** For every hour that the manufacturing center is open or has orders inside of it, the total truck cost is accumulated by number of vehicles * hourly truck cost.
-- **Open costs:** For every hour that the manufacturing center is open, the total open cost is accumulated by the hourly open cost.
-- **Production costs:** For every hour that the manufacturing center is open or has orders inside of it, the total production cost is accumulated by the production rate * hourly production cost.
-- **Incomplete costs:** For every hour that there are orders in queue to be processed at the manufacturing center, the incomplete order cost is accumulated by the number of orders in the queue * the hourly incomplete order penalty.
-
-### Business problem
-
-Fulfill the demands of all the distribution centers in shortest amount of time by minimizing the turnaround time while respecting the cost limits across various order distributions.
-
-### Objective
-
-Given a wide range of demands by distribution centers, demonstrate a BRAIN which can optimize for the turnaround time while also respecting the cost limits. This is acheived through the use of tools in hand that include the production rate at each manufacturing center, the number of trucks allocated to each manufacturing center, and whether to accept new orders at each manufacturing center or not.
-
-### Benchmark
-
-Use the AnyLogic Internal Optimizer for the benchmark performance.
-
-## Problem simulation description
-
-The model is developed in AnyLogic and simulates delivery of products from three manufacturing centers to fifteen distribution centers in USA. The orders can be of varying sizes that are uniformly distributed between 500 and 1000 units, and can uniformly occur every 2 to 10 days. Once an order is received, the reinforcement learning agent will determine how to fulfill the order in the most time and cost effective manner. Each manufacturing center produces products with a rate given by the productionRate parameter inside the ManufacturingCenter agent type. If the manufacturing center that receives the order is open, but doesn’t have enough products in stock, the order will wait in a queue denoted by the ordersQueue block inside the ManufacturingCenter agent type until enough products are in the inventory to trigger the shipment. It is worth reminding that the shortage of products at any specific manufacturing center does not lead to a transfer of the order to another manufacturing center.
+When distributors place an order, they send it to the nearest manufacturing center. On receiving it, if there is enough product on hand to fulfill it, the product is immediately loaded onto an available vehicle for transportation. Otherwise, the order (and any subsequently arriving orders) must wait for the product to be manufactured.
 
 
-### Problem description
+## Objective
 
-|                        | Definition                                                   | Notes |
-| ---------------------- | ------------------------------------------------------------ | ----- |
-| Objective              |  Meet the distribution center demands while minimizing the turnaround time and respecting the cost limit given a wide range of orders by the distribution centers | |
-| Observations           |  Chicago_is_open, Pittsburg_is_open, Nashville_is_open, Chicago_num_trucks, Pittsburg_num_trucks, Nashville_num_trucks, Chicago_production_rate, Pittsburg_production_rate, Nashville_production_rate, Chicago_util_trucks, Pittsburg_util_trucks, Nashville_util_trucks, Chicago_inventory_level, Pittsburg_inventory_level, Nashville_inventory_level, Chicago_orders_queueing, Pittsburg_orders_queueing, Nashville_orders_queueing, Chicago_average_turnaround, Pittsburg_average_turnaround, Nashville_average_turnaround, Pittsburg_cost_per_product, Nashville_cost_per_product, overall_average_turnaround, overall_average_cost_per_product, time | |
-| Actions                | Chicago_is_open, Pittsburg_is_open, Nashville_is_open, Chicago_num_trucks, Pittsburg_num_trucks, Nashville_num_trucks, Chicago_production_rate, Pittsburg_production_rate, Nashville_production_rate | |
-| Control Frequency      | Every 3 days | |
-| Episode configurations | OpenCost_PerHour, ProductionCost_PerHour, IncompleteOrderPenalty_PerHour, TruckCost_PerHour, FirstActionTime_Days, RecurrenceActionTime_Days, RollingWindowSize_Days | |
-| Iteration              | Every 3 days | |
-| Episode                | 30 days or 720 hours
+Train a brain to control each manufacturer's production rate such that the order fulfillment time and accumulated costs are minimized.
 
-#### Definition of states
+## Action
 
-* **MC_is_open** refers to whether manufacturing center accepts new orders or not.
-* **MC_num_trucks** refers to the number of trucks allocated to the manufacturing center.
-* **MC_production_rate** refers to the production rate at the manufacturing center.
-* **MC_util_trucks** refers to the truck utilization rate at the manufacturing center.
-* **MC_inventory_level** refers to the inventory level at the manufacturing center.
-* **MC_orders_queueing** refers to the sum of all order sizes queueing at the manufacturing center.
-* **MC_average_turnaround** refers to the average turnaround time at the manufacturing center.
-* **MC_cost_per_product** refers to the total accumulated cost at the manufacturing center.
-* **overall_average_turnaround** refers to the average turnaround time for all the manufacturing centers.
-* **overall_average_cost_per_product** refers to the average total accumulated cost for all the manufacturing centers.
-* **time** refers to the time that has passed since the start of the episode.
+| Action          | Type                | Description      | 
+| -----           | -----               | ---------------- | 
+| production_rates | number<0..200>[3]   | New production rate to set, per center | 
 
-## Solution approach
+Notes:
+- When controlling single locations, the sim still expects an array. However, the values for the non-controlled locations are ignored
+- Taking an action will set a target rate; the machines take time to get to speed (implemented as a two hour exponential delay)
 
-### High level solution architecture
+## States
 
-The objective is to reduce the overall average turnaround time so brain receives higher reward when the turnaround time is lower. Moreover, the brain would further receive a higher reward when when truck utilization is higher. The episode is terminated early when the overall cost per product across all manufacturing centers exceeds a certain threshold.
+| State           | Type                | Description      | 
+| -----           | -----               | ---------------- | 
+| day             | number<1..7 step 1> | Day of the week, starting with sunday | 
+| hour            | number<0..23 step 1> | Hour of the day |
+| time_years       | number              | Model time of the simulation, in years |
+| control_index   | number<All=-1, Chi=0, Pit=1, Nsh=2> | Which location are the rates being controlled for |
+| production_rates | number<0 .. 200>[3] | The currently set rates, from the last action |
+| products        | number[3]           | On-hand amount, per center  | 
+| costs           | number[3]           | The total accumulated costs since the beginning of the run |
+| costs_delta     | number[3]           | The accumulated costs since the last action |
+| queueing_count  | number[3]           | The number of orders current queueing for fulfillment |
+| queueing_amount | number[3]           | Cumulative amount in all the orders queueing for fulfillment |
+| max_fulfillment_hrs | number[3]     | Maximum time (in hours) to fulfill an order since the start of the run |
+| recent_queueing_hrs_max | number[SAMPLES][3] | Maximum time (in hours) to fulfill an order within the rolling window |
+| recent_orders_count | number[SAMPLES][3] | How many orders were received within the rolling window |
+| recent_orders_amount | number[SAMPLES][3] | Cumulative amount of all orders requested within the rolling window |
+| recent_costs | number[SAMPLES][3] | History of the cumulative costs (since the run's start) within the rolling window |
 
-The reward and terminal functions are defined as
+Notes:
+- The maximum magnitude of the "delta" costs will depend on how frequently actions are being taken (i.e., more frequent actions => lower maximum delta)
+- Time to fulfill an order is defined starting when the center received it until it was ready for delivery, which is omitted as it's known to not be a bottleneck and will vary depending on travel distance
+- The number of elements in the "recent_" values will depend on the configuration; specifically the window duration divided by the aggregate (see its notes for more information)
 
-|                        | Definition                                                   |
-| ---------------------- | ------------------------------------------------------------ | 
-| Reward                 |  Shaping the reward based on overall_average_turnaround and MC_util_trucks  | |
-| Terminal               |  if time > 720 or overall_average_cost_per_product > 100                    | |
+## Configuration
 
+| Configuration         | Type                          | Description                                  |
+|-----------------------|-------------------------------|----------------------------------------------|
+| control_index	        | number<All=-1, Chi=0, Pit=1, Nsh=2> | Which location to control the rates for |
+| action_recurrence_hrs | number<2 .. 24 step 2> | How many hours between actions |
+| rng_seed              | number<-1 .. 16777216 step 1> | Seed for the order generation (for outputting reproducible runs); -1 for random |
+| cycle_duration_wk     | number<0 .. 52 step 1> | Global ordering cycle length (weeks); 0 for no cycle |
+| recent_window_duration_hrs | number | How far back (in hours) the "recent_" have data for |
+| recent_window_aggregate_hrs | number | The amount of time (in hours) to bin the "recent_" data points into |
+
+Notes:
+- Higher values can be technically used for the action recurrence, but this is not recommended
+- As the order cycle is based on a sine wave, it's recommended to use values >= 4 (or just disable it). To get a feel for why, you can find an interactive demo here: https://www.desmos.com/calculator/f7zy9qplqw 
+- The number of samples in each "recent_" array equal the duration divided by the aggregate (e.g., requesting 1 week - 168 hours - of data, aggregated into 24 hour bins results in 7-length arrays (168/24)
+
+### Concept
+
+* Minimize fulfillment time below 24 hours
+* Minimize delta costs below $200/day
+
+## Terminal conditions
+
+* Avoid fulfillment time above 48 hours
+
+## Evaluation
+
+The model is setup to compare brains versus three baselines:
+
+1. Static rates (i.e., set once on startup and not changed afterwards)
+
+2. Linear inventory policy: sets production rate based on the number of products it has
+
+3. Custom heuristic: finds initial production rate based on the average expected amount of products that will be requested the next day (as it takes time to produce enough); it also checks if it has enough products for the current day and, if not, attempts to reach the average expected amount by midnight of that day.
+
+To compare brains against these, a custom dashboard was setup in AnyLogic to directly compare these. It can dynamically run any number of instances of the model in parallel to one another, including any/all of the baselines and any number of brains.
+
+## Running the Simulator Locally
+
+When running the simulation locally, it has two experiments you can run. After running either, you are presented with an input screen to choose your run configurations. 
+
+1. SingleSimulation - intended for a single run, for running the default sim (no brain; only baselines), local training, or playback (brain controlling).
+
+2. PolicyComparator - intended when wanting to compare two or more policies (whether the baselines and/or any number of brains).
