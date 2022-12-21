@@ -4,7 +4,7 @@ using Math
 using Goal
 
 # [[[ Constants to modify for altering the execution ]]]
-#		(placed here to unify the multiple references to it)
+# (placed here to unify the multiple references to it)
 # how long to run each episode for
 const SIM_LEN_DAYS = 7*12
 # hours between actions
@@ -54,7 +54,7 @@ type SimState {
     # History of how much product was requested in each window sample
     recent_orders_amount: number[WINDOW_SAMPLES][NUM_MCS],
     # History of the costs at the start of each window sample
-	recent_costs: number[WINDOW_SAMPLES][NUM_MCS]
+    recent_costs: number[WINDOW_SAMPLES][NUM_MCS]
 }
 
 # What Bonsai transmits to the brain
@@ -87,24 +87,23 @@ type SimConfig {
     # How many weeks the macro-level order cycle should last; set to 0 for no fluctuating demand
     cycle_duration_wk: number<0 .. 52 step 1>,
     # A container for modifying the core logic of the model.
-	# If omitted, the default will be used (applies to entire object or individual values).
-	logic_overrides: LogicConfig
+    # If omitted, the default will be used (applies to entire object or individual values).
+    logic_overrides: LogicConfig
 }
 
-# Grouped object containing variables that effect the model logic.
-# Changing these will drastically effect the sim outputs.
-# They are provided in case you want to experiment with different scenarios
-#   (e.g., linear instead of quadradic costs)
+# Grouped object containing variables that drastically effect the underlying model logic.
+# They are intended to be fixed/unchanged, but provided for experimenting with different scenarios
+#   (e.g., linear instead of quadradic costs).
 type LogicConfig {
-    # holding cost formula, accumulated per hour = (products*costPerUnit)^costExponent
-	# holding cost multiplier (default 0.001)
-	holdCostPerUnit: number,
-	# holding cost exponent (default 2)
+    # NOTE: Holding cost formula, accumulated per hour = (products*costPerUnit)^costExponent
+    # holding cost multiplier (default 0.001)
+    holdCostPerUnit: number,
+    # holding cost exponent (default 2)
     holdCostExponent: number,
-	# distance to target rate multiplier cost (default 1)
+    # distance to target rate multiplier cost (default 1)
     mtncCostMultiplier: number,
-	# how fast trucks can drive (default 90)
-    truckSpeedKPH: number,
+    # how fast trucks can drive (default 90)
+    truckSpeedKPH: number
 }
 
 # The built in Max function only supports two values,
@@ -115,7 +114,7 @@ function ArrayMax(a: number[NUM_MCS]): number {
 }
 
 simulator Simulator(action: SimAction, config: SimConfig): SimState {
-    package "Product_Delivery_v3"
+    # package "Product_Delivery"
 }
 
 # Define a concept graph
