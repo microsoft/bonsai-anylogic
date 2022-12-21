@@ -64,6 +64,7 @@ Notes:
 | cycle_duration_wk     | number<0 .. 52 step 1> | Global ordering cycle length (weeks); 0 for no cycle |
 | recent_window_duration_hrs | number | How far back (in hours) the "recent_" have data for |
 | recent_window_aggregate_hrs | number | The amount of time (in hours) to bin the "recent_" data points into |
+| logic_overrides       | LogicConfig | A set of "constant" logic variables for experimenting with alternate scenarios; see Inkling for more |
 
 Notes:
 - Higher values can be technically used for the action recurrence, but this is not recommended
